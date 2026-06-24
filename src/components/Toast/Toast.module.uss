@@ -1,0 +1,50 @@
+/* Corner-anchored stack. The viewport sizes to its toasts (no width/height) and
+   ignores pointer input; only the toasts are interactive. */
+.viewport {
+    position: absolute;
+    flex-direction: column;
+}
+
+.topLeft { top: 16px; left: 16px; align-items: flex-start; }
+.topRight { top: 16px; right: 16px; align-items: flex-end; }
+.topCenter { top: 16px; left: 0; right: 0; align-items: center; }
+.bottomLeft { bottom: 16px; left: 16px; align-items: flex-start; }
+.bottomRight { bottom: 16px; right: 16px; align-items: flex-end; }
+.bottomCenter { bottom: 16px; left: 0; right: 0; align-items: center; }
+
+.toast {
+    min-width: 240px;
+    max-width: 360px;
+    margin-top: 8px;
+    background-color: var(--ojs-overlay);
+    border-radius: var(--ojs-radius-md);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+    border-left-width: 3px;
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    padding-top: var(--ojs-space-3);
+    padding-bottom: var(--ojs-space-3);
+    padding-left: var(--ojs-space-4);
+    padding-right: var(--ojs-space-4);
+}
+
+.toastSuccess { border-left-color: var(--ojs-success); }
+.toastWarning { border-left-color: var(--ojs-warning); }
+.toastDanger { border-left-color: var(--ojs-danger); }
+.toastInfo { border-left-color: var(--ojs-info); }
+
+.title {
+    color: var(--ojs-fg);
+    -unity-font-style: bold;
+    font-size: var(--ojs-font-size-md);
+    margin-bottom: 2px;
+}
+
+.message {
+    color: var(--ojs-fg-muted);
+    font-size: var(--ojs-font-size-sm);
+}

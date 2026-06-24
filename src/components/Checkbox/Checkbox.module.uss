@@ -1,0 +1,55 @@
+/* Restyle the native Toggle's checkmark box + label. Rules match the default
+   theme's `.unity-toggle...` specificity so they win by load order (our sheet is
+   applied after the panel theme). Longhands are used so the runtime USS compiler
+   never has to expand a border shorthand. */
+
+.checkbox .unity-toggle__checkmark {
+    width: 18px;
+    height: 18px;
+    border-radius: var(--ojs-radius-sm);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+    background-color: var(--ojs-surface);
+    margin-right: var(--ojs-space-2);
+    transition-property: background-color, border-color;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.checkbox:hover .unity-toggle__checkmark {
+    border-top-color: var(--ojs-fg-subtle);
+    border-bottom-color: var(--ojs-fg-subtle);
+    border-left-color: var(--ojs-fg-subtle);
+    border-right-color: var(--ojs-fg-subtle);
+}
+
+.checkbox:checked .unity-toggle__checkmark {
+    background-color: var(--ojs-primary);
+    border-top-color: var(--ojs-primary);
+    border-bottom-color: var(--ojs-primary);
+    border-left-color: var(--ojs-primary);
+    border-right-color: var(--ojs-primary);
+}
+
+.checkbox:focus .unity-toggle__checkmark {
+    border-top-color: var(--ojs-ring);
+    border-bottom-color: var(--ojs-ring);
+    border-left-color: var(--ojs-ring);
+    border-right-color: var(--ojs-ring);
+}
+
+.checkbox:disabled .unity-toggle__checkmark {
+    opacity: 0.5;
+}
+
+.checkbox .unity-toggle__text,
+.checkbox .unity-toggle__label {
+    color: var(--ojs-fg);
+    font-size: var(--ojs-font-size-md);
+}

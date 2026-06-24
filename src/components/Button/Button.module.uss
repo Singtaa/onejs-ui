@@ -1,0 +1,123 @@
+/* On the native UI Toolkit Button. Our class sits on the same element as
+   .unity-button / .unity-text-element, so at equal specificity our rules win by
+   load order (the default theme's button-state rules were also lowered to
+   single-class specificity). */
+.button {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+
+    padding-top: var(--ojs-space-2);
+    padding-bottom: var(--ojs-space-2);
+    padding-left: var(--ojs-space-4);
+    padding-right: var(--ojs-space-4);
+
+    border-radius: var(--ojs-radius-md);
+
+    /* Constant-width transparent border so the focus ring never shifts layout. */
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+
+    background-color: var(--ojs-primary);
+    color: var(--ojs-on-primary);
+    font-size: var(--ojs-font-size-md);
+
+    transition-property: background-color;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.button:hover {
+    background-color: var(--ojs-primary-hover);
+}
+
+.button:active {
+    background-color: var(--ojs-primary-hover);
+}
+
+.button:focus {
+    border-top-color: var(--ojs-ring);
+    border-bottom-color: var(--ojs-ring);
+    border-left-color: var(--ojs-ring);
+    border-right-color: var(--ojs-ring);
+}
+
+.button:disabled {
+    opacity: 0.5;
+}
+
+/* Intent: secondary (outlined) */
+.secondary {
+    background-color: rgba(0, 0, 0, 0);
+    color: var(--ojs-fg);
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+}
+
+.secondary:hover {
+    background-color: var(--ojs-overlay-hover);
+}
+
+.secondary:active {
+    background-color: var(--ojs-overlay-hover);
+}
+
+/* Intent: ghost (text only) */
+.ghost {
+    background-color: rgba(0, 0, 0, 0);
+    color: var(--ojs-fg);
+}
+
+.ghost:hover {
+    background-color: var(--ojs-overlay-hover);
+}
+
+.ghost:active {
+    background-color: var(--ojs-overlay-hover);
+}
+
+/* Intent: danger */
+.danger {
+    background-color: var(--ojs-danger);
+    color: var(--ojs-on-danger);
+}
+
+.danger:hover {
+    background-color: var(--ojs-danger);
+}
+
+.danger:active {
+    background-color: var(--ojs-danger);
+}
+
+/* Sizes */
+.sm {
+    padding-top: var(--ojs-space-1);
+    padding-bottom: var(--ojs-space-1);
+    padding-left: var(--ojs-space-3);
+    padding-right: var(--ojs-space-3);
+    font-size: var(--ojs-font-size-sm);
+}
+
+.lg {
+    padding-top: var(--ojs-space-3);
+    padding-bottom: var(--ojs-space-3);
+    padding-left: var(--ojs-space-6);
+    padding-right: var(--ojs-space-6);
+    font-size: var(--ojs-font-size-lg);
+}

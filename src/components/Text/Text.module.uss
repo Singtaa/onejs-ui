@@ -1,0 +1,25 @@
+.text {
+    color: var(--ojs-fg);
+    font-size: var(--ojs-font-size-md);
+    white-space: normal;
+}
+
+.sm {
+    font-size: var(--ojs-font-size-sm);
+}
+
+.lg {
+    font-size: var(--ojs-font-size-lg);
+}
+
+.xl {
+    font-size: var(--ojs-font-size-xl);
+}
+
+.muted {
+    color: var(--ojs-fg-muted);
+}
+
+.subtle {
+    color: var(--ojs-fg-subtle);
+}

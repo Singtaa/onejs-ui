@@ -1,0 +1,31 @@
+/* Center the panel within the full-screen scrim. */
+.scrimCenter {
+    align-items: center;
+    justify-content: center;
+}
+
+.panel {
+    min-width: 320px;
+    max-width: 440px;
+    background-color: var(--ojs-surface-raised);
+    border-radius: var(--ojs-radius-lg);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+    padding-top: var(--ojs-space-6);
+    padding-bottom: var(--ojs-space-6);
+    padding-left: var(--ojs-space-6);
+    padding-right: var(--ojs-space-6);
+}
+
+.title {
+    font-size: var(--ojs-font-size-lg);
+    -unity-font-style: bold;
+    color: var(--ojs-fg);
+    margin-bottom: var(--ojs-space-2);
+}

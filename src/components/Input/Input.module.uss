@@ -1,0 +1,54 @@
+/* Restyle the native TextField's input box. Rules match the theme's
+   `.unity-text-field...` specificity so they win by load order; longhands avoid
+   border-shorthand expansion in the runtime USS compiler. */
+
+.input {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.input .unity-text-field__input,
+.input .unity-base-text-field__input {
+    background-color: var(--ojs-surface);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+    border-radius: var(--ojs-radius-md);
+    padding-top: var(--ojs-space-2);
+    padding-bottom: var(--ojs-space-2);
+    padding-left: var(--ojs-space-3);
+    padding-right: var(--ojs-space-3);
+    color: var(--ojs-fg);
+    font-size: var(--ojs-font-size-md);
+    --unity-cursor-color: var(--ojs-fg);
+    transition-property: border-color, background-color;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.input:hover .unity-text-field__input,
+.input:hover .unity-base-text-field__input {
+    border-top-color: var(--ojs-fg-subtle);
+    border-bottom-color: var(--ojs-fg-subtle);
+    border-left-color: var(--ojs-fg-subtle);
+    border-right-color: var(--ojs-fg-subtle);
+}
+
+.input:focus .unity-text-field__input,
+.input:focus .unity-base-text-field__input {
+    border-top-color: var(--ojs-ring);
+    border-bottom-color: var(--ojs-ring);
+    border-left-color: var(--ojs-ring);
+    border-right-color: var(--ojs-ring);
+    background-color: var(--ojs-surface);
+}
+
+.input:disabled .unity-text-field__input,
+.input:disabled .unity-base-text-field__input {
+    opacity: 0.5;
+}

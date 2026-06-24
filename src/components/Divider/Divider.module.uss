@@ -1,0 +1,13 @@
+.horizontal {
+    height: 1px;
+    align-self: stretch;
+    flex-shrink: 0;
+    background-color: var(--ojs-border);
+}
+
+.vertical {
+    width: 1px;
+    align-self: stretch;
+    flex-shrink: 0;
+    background-color: var(--ojs-border);
+}

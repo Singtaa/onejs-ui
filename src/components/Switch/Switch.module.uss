@@ -1,0 +1,83 @@
+/* Track = the toggle input area (.unity-toggle__input contains only the checkmark
+   when using the left-side `label`); knob = the checkmark, slid via `translate`
+   on :checked. */
+
+.switch .unity-toggle__input {
+    width: 38px;
+    min-width: 38px;
+    max-width: 38px;
+    height: 22px;
+    min-height: 22px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 11px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    background-color: var(--ojs-fg-subtle);
+    transition-property: background-color;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.switch:checked .unity-toggle__input {
+    background-color: var(--ojs-primary);
+}
+
+.switch:focus .unity-toggle__input {
+    border-top-color: var(--ojs-ring);
+    border-bottom-color: var(--ojs-ring);
+    border-left-color: var(--ojs-ring);
+    border-right-color: var(--ojs-ring);
+}
+
+.switch .unity-toggle__checkmark {
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    background-color: #ffffff;
+    background-image: none;
+    translate: 0 0;
+    transition-property: translate;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+/* Out-specify the theme's `.unity-toggle:checked .unity-toggle__checkmark` (0,3,0)
+   so the knob stays white when on. */
+.switch:checked .unity-toggle__checkmark {
+    translate: 16px 0;
+    background-color: #ffffff;
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+}
+
+.switch:disabled .unity-toggle__input {
+    opacity: 0.5;
+}
+
+.switch .unity-toggle__label {
+    color: var(--ojs-fg);
+    font-size: var(--ojs-font-size-md);
+}

@@ -1,0 +1,22 @@
+.card {
+    background-color: var(--ojs-surface);
+    border-radius: var(--ojs-radius-lg);
+
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+
+    padding-top: var(--ojs-space-4);
+    padding-bottom: var(--ojs-space-4);
+    padding-left: var(--ojs-space-4);
+    padding-right: var(--ojs-space-4);
+}
+
+.raised {
+    background-color: var(--ojs-surface-raised);
+}

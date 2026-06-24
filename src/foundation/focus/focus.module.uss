@@ -1,0 +1,20 @@
+/* Reusable focus ring. Add `ring` to any focusable element; the ring appears on
+   :focus from the theme --ojs-ring token. The constant transparent border keeps
+   layout stable between focused and unfocused states. */
+.ring {
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+}
+
+.ring:focus {
+    border-top-color: var(--ojs-ring);
+    border-bottom-color: var(--ojs-ring);
+    border-left-color: var(--ojs-ring);
+    border-right-color: var(--ojs-ring);
+}

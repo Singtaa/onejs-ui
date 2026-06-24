@@ -1,0 +1,22 @@
+.tooltip {
+    max-width: 240px;
+    background-color: var(--ojs-surface-raised);
+    border-radius: var(--ojs-radius-sm);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: var(--ojs-space-2);
+    padding-right: var(--ojs-space-2);
+}
+
+.text {
+    color: var(--ojs-fg);
+    font-size: var(--ojs-font-size-sm);
+}

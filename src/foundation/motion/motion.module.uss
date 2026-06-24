@@ -1,0 +1,45 @@
+/* Enter/exit fade. Pair with usePresence: always apply `fade`, then add
+   `fadeOpen` or `fadeClosed` from the presence status. */
+.fade {
+    transition-property: opacity;
+    transition-duration: var(--ojs-motion-base);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.fadeClosed {
+    opacity: 0;
+}
+
+.fadeOpen {
+    opacity: 1;
+}
+
+/* Fade + subtle scale, for popovers / menus / dialogs. */
+.scaleFade {
+    transition-property: opacity, scale;
+    transition-duration: var(--ojs-motion-base);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.scaleFadeClosed {
+    opacity: 0;
+    scale: 0.96 0.96;
+}
+
+.scaleFadeOpen {
+    opacity: 1;
+    scale: 1 1;
+}
+
+/* Reusable transition utilities for interactive controls. */
+.transitionColors {
+    transition-property: background-color, color, border-color;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.transitionTransform {
+    transition-property: scale, translate, rotate;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}

@@ -1,0 +1,51 @@
+.menu {
+    min-width: 180px;
+    background-color: var(--ojs-overlay);
+    border-radius: var(--ojs-radius-md);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.item {
+    flex-direction: row;
+    align-items: center;
+    padding-top: var(--ojs-space-2);
+    padding-bottom: var(--ojs-space-2);
+    padding-left: var(--ojs-space-3);
+    padding-right: var(--ojs-space-3);
+    transition-property: background-color;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.item:hover {
+    background-color: var(--ojs-overlay-hover);
+}
+
+.itemDisabled {
+    opacity: 0.5;
+}
+
+.itemText {
+    color: var(--ojs-fg);
+    font-size: var(--ojs-font-size-md);
+}
+
+.itemDanger .itemText {
+    color: var(--ojs-danger);
+}
+
+.separator {
+    height: 1px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    background-color: var(--ojs-border);
+}

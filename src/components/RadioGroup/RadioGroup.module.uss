@@ -1,0 +1,82 @@
+/* Radios aren't styled by the OneJS theme, so these override Unity's built-in
+   default theme. Outer ring = __checkmark-background, inner dot = __checkmark. */
+
+.radioGroup .unity-radio-button-group__container {
+    flex-direction: column;
+}
+
+.radioGroup .unity-radio-button {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.radioGroup .unity-radio-button__checkmark-background {
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+    background-color: var(--ojs-surface);
+    margin-right: var(--ojs-space-2);
+    transition-property: border-color;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+/* Dot is in-flow and centered by the ring's row flex (same pattern as the Switch
+   knob). flex-grow/shrink:0 keeps it a fixed 10px circle. */
+.radioGroup .unity-radio-button__checkmark {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    align-self: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    background-color: var(--ojs-primary);
+    background-image: none;
+}
+
+.radioGroup .unity-radio-button:hover .unity-radio-button__checkmark-background {
+    border-top-color: var(--ojs-fg-subtle);
+    border-bottom-color: var(--ojs-fg-subtle);
+    border-left-color: var(--ojs-fg-subtle);
+    border-right-color: var(--ojs-fg-subtle);
+}
+
+.radioGroup .unity-radio-button:checked .unity-radio-button__checkmark-background {
+    border-top-color: var(--ojs-primary);
+    border-bottom-color: var(--ojs-primary);
+    border-left-color: var(--ojs-primary);
+    border-right-color: var(--ojs-primary);
+}
+
+.radioGroup .unity-radio-button:focus .unity-radio-button__checkmark-background {
+    border-top-color: var(--ojs-ring);
+    border-bottom-color: var(--ojs-ring);
+    border-left-color: var(--ojs-ring);
+    border-right-color: var(--ojs-ring);
+}
+
+.radioGroup .unity-radio-button__label {
+    color: var(--ojs-fg);
+    font-size: var(--ojs-font-size-md);
+}

@@ -1,0 +1,67 @@
+/* Restyle the native Slider's tracker (groove) + dragger (thumb). Rules match the
+   theme's `.unity-base-slider...` specificity so they win by load order. */
+
+.slider {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.slider .unity-base-slider__tracker {
+    height: 6px;
+    border-radius: 3px;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    background-color: var(--ojs-fg-subtle);
+}
+
+.slider .unity-base-slider__dragger {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    margin-top: -8px;
+    background-color: var(--ojs-primary);
+    transition-property: background-color, scale;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.slider .unity-base-slider__dragger-border {
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+.slider:hover .unity-base-slider__dragger {
+    background-color: var(--ojs-primary-hover);
+}
+
+.slider:active .unity-base-slider__dragger {
+    scale: 1.12 1.12;
+}
+
+.slider:focus .unity-base-slider__dragger {
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-color: var(--ojs-ring);
+    border-bottom-color: var(--ojs-ring);
+    border-left-color: var(--ojs-ring);
+    border-right-color: var(--ojs-ring);
+}
+
+.slider:disabled .unity-base-slider__dragger {
+    opacity: 0.5;
+}
+
+.slider .unity-base-slider__label {
+    color: var(--ojs-fg);
+    font-size: var(--ojs-font-size-md);
+}

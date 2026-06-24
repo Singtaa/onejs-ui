@@ -1,0 +1,17 @@
+.heading {
+    color: var(--ojs-fg);
+    -unity-font-style: bold;
+    white-space: normal;
+}
+
+.h1 {
+    font-size: var(--ojs-font-size-xl);
+}
+
+.h2 {
+    font-size: var(--ojs-font-size-lg);
+}
+
+.h3 {
+    font-size: var(--ojs-font-size-md);
+}

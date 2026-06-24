@@ -1,0 +1,66 @@
+.panel {
+    position: absolute;
+    background-color: var(--ojs-surface-raised);
+    padding-top: var(--ojs-space-5);
+    padding-bottom: var(--ojs-space-5);
+    padding-left: var(--ojs-space-5);
+    padding-right: var(--ojs-space-5);
+    transition-property: translate;
+    transition-duration: var(--ojs-motion-slow);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.panelRight {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 340px;
+    border-left-width: 1px;
+    border-left-color: var(--ojs-border);
+}
+
+.panelLeft {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 340px;
+    border-right-width: 1px;
+    border-right-color: var(--ojs-border);
+}
+
+.panelTop {
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 300px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--ojs-border);
+}
+
+.panelBottom {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 300px;
+    border-top-width: 1px;
+    border-top-color: var(--ojs-border);
+}
+
+.openLeft { translate: 0 0; }
+.openRight { translate: 0 0; }
+.openTop { translate: 0 0; }
+.openBottom { translate: 0 0; }
+
+/* Slide by the panel's own dimension (px, not %) - more reliably transitioned
+   than percentage translate. Must match the panel width/height above. */
+.closedLeft { translate: -340px 0; }
+.closedRight { translate: 340px 0; }
+.closedTop { translate: 0 -300px; }
+.closedBottom { translate: 0 300px; }
+
+.title {
+    font-size: var(--ojs-font-size-lg);
+    -unity-font-style: bold;
+    color: var(--ojs-fg);
+    margin-bottom: var(--ojs-space-3);
+}

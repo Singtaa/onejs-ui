@@ -1,0 +1,49 @@
+/* Fixed height + radius = height/2 makes a true capsule. (A huge radius like
+   --ojs-radius-full would clamp to half-width x half-height and render an
+   ellipse on a wide element, not a pill.) */
+.badge {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    height: 20px;
+    padding-left: var(--ojs-space-2);
+    padding-right: var(--ojs-space-2);
+    border-radius: 10px;
+    background-color: var(--ojs-surface-raised);
+}
+
+/* Text color via descendant (beats the theme's default .unity-text-element). */
+.badge .unity-text-element {
+    font-size: var(--ojs-font-size-sm);
+    color: var(--ojs-fg);
+    white-space: nowrap;
+}
+
+.primary {
+    background-color: var(--ojs-primary);
+}
+.primary .unity-text-element {
+    color: var(--ojs-on-primary);
+}
+
+.success {
+    background-color: var(--ojs-success);
+}
+.success .unity-text-element {
+    color: #ffffff;
+}
+
+.warning {
+    background-color: var(--ojs-warning);
+}
+.warning .unity-text-element {
+    color: #1a1c1f;
+}
+
+.danger {
+    background-color: var(--ojs-danger);
+}
+.danger .unity-text-element {
+    color: var(--ojs-on-danger);
+}

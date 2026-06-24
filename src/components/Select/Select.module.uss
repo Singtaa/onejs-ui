@@ -1,0 +1,60 @@
+.trigger {
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.triggerLabel {
+    color: var(--ojs-fg);
+    font-size: var(--ojs-font-size-md);
+}
+
+.caret {
+    color: var(--ojs-fg-muted);
+    font-size: var(--ojs-font-size-md);
+    margin-left: var(--ojs-space-2);
+}
+
+/* Menu surface. No box-shadow in UI Toolkit, so depth comes from the overlay
+   surface + border contrast. */
+.menu {
+    min-width: 180px;
+    background-color: var(--ojs-overlay);
+    border-radius: var(--ojs-radius-md);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.option {
+    flex-direction: row;
+    align-items: center;
+    padding-top: var(--ojs-space-2);
+    padding-bottom: var(--ojs-space-2);
+    padding-left: var(--ojs-space-3);
+    padding-right: var(--ojs-space-3);
+    transition-property: background-color;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.option:hover {
+    background-color: var(--ojs-overlay-hover);
+}
+
+.optionSelected {
+    background-color: var(--ojs-overlay-hover);
+}
+
+.optionText {
+    color: var(--ojs-fg);
+    font-size: var(--ojs-font-size-md);
+}
