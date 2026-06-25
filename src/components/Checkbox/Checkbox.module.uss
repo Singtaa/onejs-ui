@@ -37,7 +37,8 @@
     border-right-color: var(--ojs-primary);
 }
 
-.checkbox:focus .unity-toggle__checkmark {
+/* Focus ring is class-driven by the focus-visible manager (no :focus rule). */
+.checkbox.focus-ring .unity-toggle__checkmark {
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);

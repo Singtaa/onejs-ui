@@ -1,6 +1,6 @@
-/* Reusable focus ring. Add `ring` to any focusable element; the ring appears on
-   :focus from the theme --ojs-ring token. The constant transparent border keeps
-   layout stable between focused and unfocused states. */
+/* Reusable focus ring. Add `ring` to any focusable element; the focus-visible
+   manager toggles `focus-ring` on it during keyboard/gamepad focus, painting the
+   --ojs-ring token. The constant transparent border keeps layout stable. */
 .ring {
     border-top-width: 2px;
     border-bottom-width: 2px;
@@ -12,7 +12,9 @@
     border-right-color: rgba(0, 0, 0, 0);
 }
 
-.ring:focus {
+/* Focus ring is class-driven by the focus-visible manager (no :focus rule), for
+   ad-hoc focusable Views using the `ring` primitive. */
+.ring.focus-ring {
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);

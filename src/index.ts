@@ -12,6 +12,11 @@ export type { ThemeProviderProps, ThemeTokens } from "./theme"
 export {
   FocusScope,
   useFocusReturn,
+  FocusManager,
+  useFocusVisible,
+  initFocusVisible,
+  disposeFocusVisible,
+  FOCUS_RING_CLASS,
   getFocusedElement,
   focusElement,
   focusFirstIn,
@@ -19,7 +24,7 @@ export {
   isSameElement,
   isWithin,
 } from "./foundation/focus"
-export type { FocusScopeProps } from "./foundation/focus"
+export type { FocusScopeProps, FocusManagerProps } from "./foundation/focus"
 
 // Foundation: motion
 export { usePresence, motion } from "./foundation/motion"

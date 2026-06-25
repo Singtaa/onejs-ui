@@ -35,7 +35,8 @@
     background-color: var(--ojs-primary);
 }
 
-.switch:focus .unity-toggle__input {
+/* Focus ring is class-driven by the focus-visible manager (no :focus rule). */
+.switch.focus-ring .unity-toggle__input {
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);

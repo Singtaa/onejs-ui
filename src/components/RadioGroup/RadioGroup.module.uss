@@ -69,7 +69,11 @@
     border-right-color: var(--ojs-primary);
 }
 
-.radioGroup .unity-radio-button:focus .unity-radio-button__checkmark-background {
+/* Focus ring (focus-visible manager). The panel focuses the GROUP, not an
+   individual radio, so the manager puts `focus-ring` on the group element; ring
+   the radio that currently holds focus (:focus) within the group — the one you've
+   navigated to, which isn't selected until you submit. */
+.radioGroup.focus-ring .unity-radio-button:focus .unity-radio-button__checkmark-background {
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);
@@ -79,4 +83,10 @@
 .radioGroup .unity-radio-button__label {
     color: var(--ojs-fg);
     font-size: var(--ojs-font-size-md);
+}
+
+/* Color the label's text element directly - it keeps its own (default-theme)
+   color otherwise, so coloring the label element alone isn't enough. */
+.radioGroup .unity-text-element {
+    color: var(--ojs-fg);
 }

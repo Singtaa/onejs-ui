@@ -31,7 +31,21 @@ export function applyTheme(tokens: ThemeTokens, target?: any): void {
     .map(([key, value]) => `    --ojs-${camelToKebab(key)}: ${value};`)
     .join("\n")
 
-  const uss = `.${ROOT_CLASS} {\n${decls}\n}`
+  // Map Unity's native control text vars to our foreground. The default runtime
+  // theme (UnityDefaultRuntimeTheme.tss) sets these to dark-mode light values, and
+  // native sub-elements (TextField text, native control labels) read them - which
+  // would otherwise win over our `color` and stay light in a light theme. Use the
+  // literal value, not var(--ojs-fg): the runtime USS compiler doesn't reliably
+  // resolve a var-in-var chain.
+  const nativeOverrides = [
+    `--unity-colors-default-text: ${tokens.fg};`,
+    `--unity-colors-label-text: ${tokens.fg};`,
+    `--unity-colors-input_field-text: ${tokens.fg};`,
+  ]
+    .map((d) => `    ${d}`)
+    .join("\n")
+
+  const uss = `.${ROOT_CLASS} {\n${decls}\n${nativeOverrides}\n}`
   compileStyleSheet(uss, SHEET_NAME)
 
   const root = target ?? (typeof __root !== "undefined" ? __root : undefined)

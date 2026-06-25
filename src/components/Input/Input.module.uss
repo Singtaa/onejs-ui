@@ -31,6 +31,12 @@
     transition-timing-function: var(--ojs-ease);
 }
 
+/* Color the value text element directly - the inner text element keeps its own
+   (default-theme) color otherwise, so setting color on the box isn't enough. */
+.input .unity-text-element {
+    color: var(--ojs-fg);
+}
+
 .input:hover .unity-text-field__input,
 .input:hover .unity-base-text-field__input {
     border-top-color: var(--ojs-fg-subtle);
@@ -39,8 +45,9 @@
     border-right-color: var(--ojs-fg-subtle);
 }
 
-.input:focus .unity-text-field__input,
-.input:focus .unity-base-text-field__input {
+/* Focus ring is class-driven by the focus-visible manager (no :focus rule). */
+.input.focus-ring .unity-text-field__input,
+.input.focus-ring .unity-base-text-field__input {
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);

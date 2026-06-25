@@ -48,7 +48,10 @@
     background-color: var(--ojs-primary-hover);
 }
 
-.button:focus {
+/* Focus ring is class-driven by the focus-visible manager. No `:focus` rule:
+   UI Toolkit's :focus doesn't reliably paint on navigation focus and can stick
+   after programmatic/pointer focus, which left artifacts. */
+.button.focus-ring {
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);

@@ -9,6 +9,7 @@ import {
 import { applyTheme } from "./applyTheme"
 import { darkTheme } from "./dark"
 import type { ThemeTokens } from "./tokens"
+import { initFocusVisible, disposeFocusVisible } from "../foundation/focus/focusVisible"
 
 interface ThemeContextValue {
   /** The currently active token set (read for inline/dynamic values that can't use USS var()). */
@@ -42,6 +43,13 @@ export function ThemeProvider({ theme = darkTheme, children }: ThemeProviderProp
   useLayoutEffect(() => {
     applyTheme(tokens)
   }, [tokens])
+
+  // Focus-visible ring manager: one-shot (not keyed on tokens, so a theme swap
+  // doesn't tear it down). Lives for the panel's lifetime.
+  useLayoutEffect(() => {
+    initFocusVisible()
+    return () => disposeFocusVisible()
+  }, [])
 
   const setTheme = useCallback((next: ThemeTokens) => setTokens(next), [])
 
