@@ -35,6 +35,15 @@
     color: var(--ojs-on-primary);
     font-size: var(--ojs-font-size-md);
 
+    /* Decoration slots: a theme can dress the filled button in a 9-slice frame
+       purely through tokens. No-op by default; outlined/ghost intents clear it. */
+    background-image: var(--ojs-button-image, none);
+    -unity-slice-left: var(--ojs-button-slice, 0);
+    -unity-slice-right: var(--ojs-button-slice, 0);
+    -unity-slice-top: var(--ojs-button-slice, 0);
+    -unity-slice-bottom: var(--ojs-button-slice, 0);
+    -unity-slice-scale: var(--ojs-button-slice-scale, 1px);
+
     transition-property: background-color;
     transition-duration: var(--ojs-motion-fast);
     transition-timing-function: var(--ojs-ease);
@@ -42,10 +51,12 @@
 
 .button:hover {
     background-color: var(--ojs-primary-hover);
+    background-image: var(--ojs-button-image-hover, none);
 }
 
 .button:active {
     background-color: var(--ojs-primary-hover);
+    background-image: var(--ojs-button-image-active, none);
 }
 
 /* Focus ring is class-driven by the focus-visible manager. No `:focus` rule:
@@ -62,9 +73,10 @@
     opacity: 0.5;
 }
 
-/* Intent: secondary (outlined) */
+/* Intent: secondary (outlined). Clears any filled-button frame image. */
 .secondary {
     background-color: rgba(0, 0, 0, 0);
+    background-image: none;
     color: var(--ojs-fg);
     border-top-color: var(--ojs-border);
     border-bottom-color: var(--ojs-border);
@@ -74,24 +86,29 @@
 
 .secondary:hover {
     background-color: var(--ojs-overlay-hover);
+    background-image: none;
 }
 
 .secondary:active {
     background-color: var(--ojs-overlay-hover);
+    background-image: none;
 }
 
-/* Intent: ghost (text only) */
+/* Intent: ghost (text only). Clears any filled-button frame image. */
 .ghost {
     background-color: rgba(0, 0, 0, 0);
+    background-image: none;
     color: var(--ojs-fg);
 }
 
 .ghost:hover {
     background-color: var(--ojs-overlay-hover);
+    background-image: none;
 }
 
 .ghost:active {
     background-color: var(--ojs-overlay-hover);
+    background-image: none;
 }
 
 /* Intent: danger */

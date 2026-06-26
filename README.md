@@ -98,6 +98,8 @@ const brand: ThemeTokens = { ...darkTheme, primary: "#7c5cff", ring: "#cdb8ff" }
 
 Components reference tokens only through `var(--ojs-*)` in their `.module.uss` files. (Inline `style=` can't read USS variables, so it's never used for themeable properties.)
 
+Themes can also dress `Card` and `Button` in **9-slice frames** purely through optional decoration tokens (`cardImage` / `buttonImage` + slice insets), set typography globally via the optional `font` token, and be **referenced by name** once registered (`<ThemeProvider theme="dark">`, `setTheme("pixel")`). See the [theming guide](https://onejs.com/docs/onejs-ui/theming).
+
 ## Focus & navigation
 
 `onejs-ui` ships a **focus-visible** model: the themeable ring shows only while the input modality is keyboard/gamepad and is suppressed on pointer use. `<ThemeProvider>` initializes it automatically, so all built-in controls get correct nav rings with **zero per-app wiring**.

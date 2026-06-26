@@ -15,6 +15,16 @@
     padding-bottom: var(--ojs-space-4);
     padding-left: var(--ojs-space-4);
     padding-right: var(--ojs-space-4);
+
+    /* Decoration slots: a theme can dress the card in a 9-slice frame purely
+       through tokens. No-op by default (no image, zero slice), so themes that
+       don't set them are unaffected. */
+    background-image: var(--ojs-card-image, none);
+    -unity-slice-left: var(--ojs-card-slice, 0);
+    -unity-slice-right: var(--ojs-card-slice, 0);
+    -unity-slice-top: var(--ojs-card-slice, 0);
+    -unity-slice-bottom: var(--ojs-card-slice, 0);
+    -unity-slice-scale: var(--ojs-card-slice-scale, 1px);
 }
 
 .raised {

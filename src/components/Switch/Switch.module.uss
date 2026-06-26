@@ -12,7 +12,7 @@
     flex-shrink: 0;
     flex-direction: row;
     align-items: center;
-    border-radius: 11px;
+    border-radius: var(--ojs-switch-radius, 11px);
     padding-top: 0;
     padding-bottom: 0;
     padding-left: 3px;
@@ -26,6 +26,8 @@
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     background-color: var(--ojs-fg-subtle);
+    /* Skin slot: off-track sprite. */
+    background-image: var(--ojs-switch-track-image, none);
     transition-property: background-color;
     transition-duration: var(--ojs-motion-fast);
     transition-timing-function: var(--ojs-ease);
@@ -33,6 +35,7 @@
 
 .switch:checked .unity-toggle__input {
     background-color: var(--ojs-primary);
+    background-image: var(--ojs-switch-track-image-checked, none);
 }
 
 /* Focus ring is class-driven by the focus-visible manager (no :focus rule). */
@@ -46,7 +49,7 @@
 .switch .unity-toggle__checkmark {
     width: 14px;
     height: 14px;
-    border-radius: 7px;
+    border-radius: var(--ojs-switch-knob-radius, 7px);
     border-top-width: 0;
     border-bottom-width: 0;
     border-left-width: 0;
@@ -56,7 +59,10 @@
     margin-left: 0;
     margin-right: 0;
     background-color: #ffffff;
-    background-image: none;
+    /* Skin slot: knob sprite. White tint so the full-color sprite isn't tinted
+       dark by the native checkmark's default image-tint. */
+    background-image: var(--ojs-switch-knob-image, none);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
     translate: 0 0;
     transition-property: translate;
     transition-duration: var(--ojs-motion-fast);

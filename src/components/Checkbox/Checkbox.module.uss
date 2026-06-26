@@ -7,15 +7,19 @@
     width: 18px;
     height: 18px;
     border-radius: var(--ojs-radius-sm);
-    border-top-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 1px;
+    border-top-width: var(--ojs-checkbox-border-width, 1px);
+    border-bottom-width: var(--ojs-checkbox-border-width, 1px);
+    border-left-width: var(--ojs-checkbox-border-width, 1px);
+    border-right-width: var(--ojs-checkbox-border-width, 1px);
     border-top-color: var(--ojs-border);
     border-bottom-color: var(--ojs-border);
     border-left-color: var(--ojs-border);
     border-right-color: var(--ojs-border);
     background-color: var(--ojs-surface);
+    /* Skin slot: unchecked box sprite. White tint so the full-color sprite isn't
+       tinted dark by the native checkmark's default image-tint. */
+    background-image: var(--ojs-checkbox-image, none);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
     margin-right: var(--ojs-space-2);
     transition-property: background-color, border-color;
     transition-duration: var(--ojs-motion-fast);
@@ -31,6 +35,7 @@
 
 .checkbox:checked .unity-toggle__checkmark {
     background-color: var(--ojs-primary);
+    background-image: var(--ojs-checkbox-image-checked, none);
     border-top-color: var(--ojs-primary);
     border-bottom-color: var(--ojs-primary);
     border-left-color: var(--ojs-primary);

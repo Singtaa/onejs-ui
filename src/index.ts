@@ -5,6 +5,9 @@ export {
   useTheme,
   darkTheme,
   lightTheme,
+  registerTheme,
+  getTheme,
+  getRegisteredThemes,
 } from "./theme"
 export type { ThemeProviderProps, ThemeTokens } from "./theme"
 

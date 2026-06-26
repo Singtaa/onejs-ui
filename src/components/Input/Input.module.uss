@@ -29,6 +29,15 @@
     transition-property: border-color, background-color;
     transition-duration: var(--ojs-motion-fast);
     transition-timing-function: var(--ojs-ease);
+
+    /* Decoration slot: a theme can dress the field in a 9-slice (e.g. a sunken
+       frame). No-op by default. */
+    background-image: var(--ojs-input-image, none);
+    -unity-slice-left: var(--ojs-input-slice, 0);
+    -unity-slice-right: var(--ojs-input-slice, 0);
+    -unity-slice-top: var(--ojs-input-slice, 0);
+    -unity-slice-bottom: var(--ojs-input-slice, 0);
+    -unity-slice-scale: var(--ojs-input-slice-scale, 1px);
 }
 
 /* Color the value text element directly - the inner text element keeps its own

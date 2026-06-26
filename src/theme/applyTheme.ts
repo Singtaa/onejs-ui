@@ -1,4 +1,5 @@
 import type { ThemeTokens } from "./tokens"
+import { resolveTheme } from "./registry"
 
 const ROOT_CLASS = "ojs-root"
 const SHEET_NAME = "ojs-theme"
@@ -22,12 +23,16 @@ function camelToKebab(s: string): string {
  * themes is a single crossing with no React re-render and no per-element style
  * re-marshal. Call once at startup, then again whenever the theme changes.
  *
- * @param tokens The theme to apply.
+ * @param theme The theme to apply - a `ThemeTokens` object or a registered theme
+ *   name (e.g. `"dark"`, `"light"`, or a premade theme's name).
  * @param target Optional element to carry the `ojs-root` class. Defaults to the
  *   global render root (`__root`).
  */
-export function applyTheme(tokens: ThemeTokens, target?: any): void {
+export function applyTheme(theme: ThemeTokens | string, target?: any): void {
+  const tokens = resolveTheme(theme)
+
   const decls = Object.entries(tokens)
+    .filter(([, value]) => value !== undefined && value !== null)
     .map(([key, value]) => `    --ojs-${camelToKebab(key)}: ${value};`)
     .join("\n")
 
@@ -45,7 +50,13 @@ export function applyTheme(tokens: ThemeTokens, target?: any): void {
     .map((d) => `    ${d}`)
     .join("\n")
 
-  const uss = `.${ROOT_CLASS} {\n${decls}\n${nativeOverrides}\n}`
+  // Apply the theme font on the root so every descendant inherits it (UITK
+  // `-unity-font-definition` is an inherited property). Only when the theme sets
+  // one - otherwise the panel's default font is left untouched. Because it lives
+  // in this same sheet, a theme swap correctly clears it when the next theme has none.
+  const fontRule = tokens.font ? "\n    -unity-font-definition: var(--ojs-font);" : ""
+
+  const uss = `.${ROOT_CLASS} {\n${decls}\n${nativeOverrides}${fontRule}\n}`
   compileStyleSheet(uss, SHEET_NAME)
 
   const root = target ?? (typeof __root !== "undefined" ? __root : undefined)

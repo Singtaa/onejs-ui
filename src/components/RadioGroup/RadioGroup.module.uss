@@ -15,7 +15,7 @@
 .radioGroup .unity-radio-button__checkmark-background {
     width: 18px;
     height: 18px;
-    border-radius: 9px;
+    border-radius: var(--ojs-radio-radius, 9px);
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -23,15 +23,17 @@
     padding-bottom: 0;
     padding-left: 0;
     padding-right: 0;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 1px;
+    border-top-width: var(--ojs-radio-border-width, 1px);
+    border-bottom-width: var(--ojs-radio-border-width, 1px);
+    border-left-width: var(--ojs-radio-border-width, 1px);
+    border-right-width: var(--ojs-radio-border-width, 1px);
     border-top-color: var(--ojs-border);
     border-bottom-color: var(--ojs-border);
     border-left-color: var(--ojs-border);
     border-right-color: var(--ojs-border);
     background-color: var(--ojs-surface);
+    /* Skin slot: unselected ring sprite. */
+    background-image: var(--ojs-radio-image, none);
     margin-right: var(--ojs-space-2);
     transition-property: border-color;
     transition-duration: var(--ojs-motion-fast);
@@ -51,7 +53,9 @@
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
-    background-color: var(--ojs-primary);
+    /* Native dot. A sprite theme can hide it (transparent) when the dot is baked
+       into the selected-ring sprite instead. */
+    background-color: var(--ojs-radio-dot-color, var(--ojs-primary));
     background-image: none;
 }
 
@@ -63,6 +67,7 @@
 }
 
 .radioGroup .unity-radio-button:checked .unity-radio-button__checkmark-background {
+    background-image: var(--ojs-radio-image-checked, none);
     border-top-color: var(--ojs-primary);
     border-bottom-color: var(--ojs-primary);
     border-left-color: var(--ojs-primary);

@@ -7,25 +7,33 @@
 }
 
 .slider .unity-base-slider__tracker {
-    height: 6px;
-    border-radius: 3px;
+    height: 8px;
+    border-radius: var(--ojs-slider-radius, 3px);
     border-top-width: 0;
     border-bottom-width: 0;
     border-left-width: 0;
     border-right-width: 0;
     background-color: var(--ojs-fg-subtle);
+    /* Skin slot: rail sprite (9-sliced - the rail stretches to the slider width). */
+    background-image: var(--ojs-slider-rail-image, none);
+    -unity-slice-left: var(--ojs-slider-rail-slice, 0);
+    -unity-slice-right: var(--ojs-slider-rail-slice, 0);
+    -unity-slice-top: var(--ojs-slider-rail-slice, 0);
+    -unity-slice-bottom: var(--ojs-slider-rail-slice, 0);
 }
 
 .slider .unity-base-slider__dragger {
     width: 16px;
     height: 16px;
-    border-radius: 8px;
+    border-radius: var(--ojs-slider-thumb-radius, 8px);
     border-top-width: 0;
     border-bottom-width: 0;
     border-left-width: 0;
     border-right-width: 0;
-    margin-top: -8px;
+    margin-top: -7px;
     background-color: var(--ojs-primary);
+    /* Skin slot: thumb sprite. */
+    background-image: var(--ojs-slider-thumb-image, none);
     transition-property: background-color, scale;
     transition-duration: var(--ojs-motion-fast);
     transition-timing-function: var(--ojs-ease);

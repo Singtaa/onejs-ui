@@ -21,6 +21,13 @@
     padding-bottom: var(--ojs-space-6);
     padding-left: var(--ojs-space-6);
     padding-right: var(--ojs-space-6);
+    /* Overlay surface skin slot (shared across overlays). No-op by default. */
+    background-image: var(--ojs-surface-image, none);
+    -unity-slice-left: var(--ojs-surface-slice, 0);
+    -unity-slice-right: var(--ojs-surface-slice, 0);
+    -unity-slice-top: var(--ojs-surface-slice, 0);
+    -unity-slice-bottom: var(--ojs-surface-slice, 0);
+    -unity-slice-scale: var(--ojs-surface-slice-scale, 1px);
 }
 
 .title {

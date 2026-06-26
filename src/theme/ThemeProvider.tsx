@@ -8,14 +8,15 @@ import {
 } from "react"
 import { applyTheme } from "./applyTheme"
 import { darkTheme } from "./dark"
+import { resolveTheme } from "./registry"
 import type { ThemeTokens } from "./tokens"
 import { initFocusVisible, disposeFocusVisible } from "../foundation/focus/focusVisible"
 
 interface ThemeContextValue {
   /** The currently active token set (read for inline/dynamic values that can't use USS var()). */
   tokens: ThemeTokens
-  /** Swap the active theme. Instant: recompiles the variables sheet, no re-render of the tree. */
-  setTheme: (tokens: ThemeTokens) => void
+  /** Swap the active theme by tokens object or registered name. Instant: recompiles the variables sheet, no re-render of the tree. */
+  setTheme: (theme: ThemeTokens | string) => void
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
@@ -24,8 +25,8 @@ const ThemeContext = createContext<ThemeContextValue>({
 })
 
 export interface ThemeProviderProps {
-  /** Initial theme. Defaults to `darkTheme`. */
-  theme?: ThemeTokens
+  /** Initial theme - a `ThemeTokens` object or a registered theme name. Defaults to `darkTheme`. */
+  theme?: ThemeTokens | string
   children?: ReactNode
 }
 
@@ -38,7 +39,7 @@ export interface ThemeProviderProps {
  * `setTheme` swapper.
  */
 export function ThemeProvider({ theme = darkTheme, children }: ThemeProviderProps) {
-  const [tokens, setTokens] = useState<ThemeTokens>(theme)
+  const [tokens, setTokens] = useState<ThemeTokens>(() => resolveTheme(theme))
 
   useLayoutEffect(() => {
     applyTheme(tokens)
@@ -51,7 +52,7 @@ export function ThemeProvider({ theme = darkTheme, children }: ThemeProviderProp
     return () => disposeFocusVisible()
   }, [])
 
-  const setTheme = useCallback((next: ThemeTokens) => setTokens(next), [])
+  const setTheme = useCallback((next: ThemeTokens | string) => setTokens(resolveTheme(next)), [])
 
   return (
     <ThemeContext.Provider value={{ tokens, setTheme }}>
