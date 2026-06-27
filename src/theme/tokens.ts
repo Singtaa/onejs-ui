@@ -29,6 +29,15 @@ export interface ThemeTokens {
   // Lines & focus
   border: string
   ring: string
+  /**
+   * `--ojs-focus-width` (optional; default `2px`). Border thickness of the
+   * keyboard focus ring, shared by every control (Button, Input, Checkbox, Radio,
+   * Switch, Slider, and the `ring` primitive) so the ring is uniform and visible
+   * even on sprite-skinned themes that zero out a control's resting border. Each
+   * control falls back to `2px` via `var(--ojs-focus-width, 2px)`, so themes need
+   * not set it.
+   */
+  focusWidth?: string
 
   // Accent / primary action
   primary: string

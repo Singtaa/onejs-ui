@@ -102,7 +102,7 @@ Themes can also dress `Card` and `Button` in **9-slice frames** purely through o
 
 ## Focus & navigation
 
-`onejs-ui` ships a **focus-visible** model: the themeable ring shows only while the input modality is keyboard/gamepad and is suppressed on pointer use. `<ThemeProvider>` initializes it automatically, so all built-in controls get correct nav rings with **zero per-app wiring**.
+`onejs-ui` ships a **focus-visible** model: the themeable ring shows only while the input modality is keyboard/gamepad and is suppressed on pointer use. `<ThemeProvider>` initializes it automatically, so all built-in controls get correct nav rings with **zero per-app wiring**. The ring paints in the `ring` token at a uniform width across every control (the optional `focusWidth` token, default `2px`) and stays visible even on sprite-skinned themes that zero a control's resting border.
 
 For overlays and custom regions:
 

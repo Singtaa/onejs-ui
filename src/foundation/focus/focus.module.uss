@@ -1,11 +1,12 @@
 /* Reusable focus ring. Add `ring` to any focusable element; the focus-visible
    manager toggles `focus-ring` on it during keyboard/gamepad focus, painting the
-   --ojs-ring token. The constant transparent border keeps layout stable. */
+   --ojs-ring token. The constant transparent border (= focus width) keeps layout
+   stable. */
 .ring {
-    border-top-width: 2px;
-    border-bottom-width: 2px;
-    border-left-width: 2px;
-    border-right-width: 2px;
+    border-top-width: var(--ojs-focus-width, 2px);
+    border-bottom-width: var(--ojs-focus-width, 2px);
+    border-left-width: var(--ojs-focus-width, 2px);
+    border-right-width: var(--ojs-focus-width, 2px);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     border-left-color: rgba(0, 0, 0, 0);

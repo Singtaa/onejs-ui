@@ -42,8 +42,15 @@
     border-right-color: var(--ojs-primary);
 }
 
-/* Focus ring is class-driven by the focus-visible manager (no :focus rule). */
+/* Focus ring is class-driven by the focus-visible manager (no :focus rule). Sets
+   both width and color so it shows even when the theme zeroes the resting border
+   (sprite-skinned). The checkmark is fixed-size, so the wider border draws inward
+   (border-box) without reflowing the row. */
 .checkbox.focus-ring .unity-toggle__checkmark {
+    border-top-width: var(--ojs-focus-width, 2px);
+    border-bottom-width: var(--ojs-focus-width, 2px);
+    border-left-width: var(--ojs-focus-width, 2px);
+    border-right-width: var(--ojs-focus-width, 2px);
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);

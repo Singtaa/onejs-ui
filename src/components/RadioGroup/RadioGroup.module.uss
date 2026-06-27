@@ -74,11 +74,23 @@
     border-right-color: var(--ojs-primary);
 }
 
-/* Focus ring (focus-visible manager). The panel focuses the GROUP, not an
-   individual radio, so the manager puts `focus-ring` on the group element; ring
-   the radio that currently holds focus (:focus) within the group — the one you've
-   navigated to, which isn't selected until you submit. */
+/* Focus ring for the radios, painting the checkmark-background's border. Two paths:
+   - First: the RadioGroup component toggles `focus-ring` on the radio on each
+     RadioButton's FocusInEvent (covers keyboard ENTRY, where no radio is `:focus`
+     yet). It paints on arrow nav because the group's own focus-ring toggle (from the
+     focus-visible manager, while the group holds focus) recomputes the whole subtree.
+   - Second: the native `:focus` pseudo-state (set by the group during arrow nav)
+     while the group carries the manager's `focus-ring`.
+   Width is set too, so the ring shows even when a theme zeroes the resting border.
+   KNOWN GAP: Tab moves focus to the radio itself (not the group), so neither the
+   group's focus-ring nor the subtree recompute fires, and only the :checked radio's
+   border repaints — needs a OneJS-core subtree-style-recompute (Singtaa/OneJS#109). */
+.radioGroup .unity-radio-button.focus-ring .unity-radio-button__checkmark-background,
 .radioGroup.focus-ring .unity-radio-button:focus .unity-radio-button__checkmark-background {
+    border-top-width: var(--ojs-focus-width, 2px);
+    border-bottom-width: var(--ojs-focus-width, 2px);
+    border-left-width: var(--ojs-focus-width, 2px);
+    border-right-width: var(--ojs-focus-width, 2px);
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);

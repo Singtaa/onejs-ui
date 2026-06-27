@@ -56,10 +56,10 @@
 
 /* Focus ring is class-driven by the focus-visible manager (no :focus rule). */
 .slider.focus-ring .unity-base-slider__dragger {
-    border-top-width: 3px;
-    border-bottom-width: 3px;
-    border-left-width: 3px;
-    border-right-width: 3px;
+    border-top-width: var(--ojs-focus-width, 2px);
+    border-bottom-width: var(--ojs-focus-width, 2px);
+    border-left-width: var(--ojs-focus-width, 2px);
+    border-right-width: var(--ojs-focus-width, 2px);
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);

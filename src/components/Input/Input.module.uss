@@ -5,6 +5,29 @@
 .input {
     margin-top: 0;
     margin-bottom: 0;
+    /* The focus ring lives on this OUTER field element — it is the element that
+       gains `focus-ring` on keyboard focus (the focusController focuses the
+       TextField root, not the inner box). A constant transparent border at the
+       focus width reserves layout (focus swaps only color, no reflow) and rings the
+       field from outside the inner box, clear of the inner box's native :focus
+       styling and any inset 9-slice frame sprite that would otherwise hide an edge
+       border on the inner box itself. */
+    border-top-width: var(--ojs-focus-width, 2px);
+    border-bottom-width: var(--ojs-focus-width, 2px);
+    border-left-width: var(--ojs-focus-width, 2px);
+    border-right-width: var(--ojs-focus-width, 2px);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-radius: var(--ojs-radius-md);
+}
+
+.input.focus-ring {
+    border-top-color: var(--ojs-ring);
+    border-bottom-color: var(--ojs-ring);
+    border-left-color: var(--ojs-ring);
+    border-right-color: var(--ojs-ring);
 }
 
 .input .unity-text-field__input,
@@ -54,13 +77,10 @@
     border-right-color: var(--ojs-fg-subtle);
 }
 
-/* Focus ring is class-driven by the focus-visible manager (no :focus rule). */
+/* The ring itself is on the outer `.input` element (above). Here we only hold the
+   inner box's fill steady so the native :focus state doesn't retint it. */
 .input.focus-ring .unity-text-field__input,
 .input.focus-ring .unity-base-text-field__input {
-    border-top-color: var(--ojs-ring);
-    border-bottom-color: var(--ojs-ring);
-    border-left-color: var(--ojs-ring);
-    border-right-color: var(--ojs-ring);
     background-color: var(--ojs-surface);
 }
 
