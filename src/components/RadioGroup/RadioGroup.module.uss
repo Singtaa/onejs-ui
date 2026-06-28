@@ -74,18 +74,15 @@
     border-right-color: var(--ojs-primary);
 }
 
-/* Focus ring for the radios, painting the checkmark-background's border. Two paths:
-   - First: the RadioGroup component toggles `focus-ring` on the radio on each
-     RadioButton's FocusInEvent (covers keyboard ENTRY, where no radio is `:focus`
-     yet). It paints on arrow nav because the group's own focus-ring toggle (from the
-     focus-visible manager, while the group holds focus) recomputes the whole subtree.
-   - Second: the native `:focus` pseudo-state (set by the group during arrow nav)
-     while the group carries the manager's `focus-ring`.
-   Width is set too, so the ring shows even when a theme zeroes the resting border.
-   KNOWN GAP: Tab moves focus to the radio itself (not the group), so neither the
-   group's focus-ring nor the subtree recompute fires, and only the :checked radio's
-   border repaints — needs a OneJS-core subtree-style-recompute (Singtaa/OneJS#109). */
-.radioGroup .unity-radio-button.focus-ring .unity-radio-button__checkmark-background,
+/* Focus ring for the radios: the native `:focus` pseudo-state the group sets on the
+   navigated radio, while the group itself carries the focus-visible manager's
+   `focus-ring` (so it's keyboard-modality-gated). This rings each radio as you arrow
+   to it and clears on exit. Width is set too, so the ring shows even when a theme
+   zeroes the resting border. KNOWN GAPS (both need a OneJS-core subtree-style-recompute,
+   Singtaa/OneJS#109): the radio you first land on isn't `:focus` until you move once;
+   and under Tab (focus lands on the radio, not the group) only the :checked radio
+   repaints. A JS class-toggled ring can't fix either — UI Toolkit fires no JS event to
+   clear an entry ring, so it would stick. */
 .radioGroup.focus-ring .unity-radio-button:focus .unity-radio-button__checkmark-background {
     border-top-width: var(--ojs-focus-width, 2px);
     border-bottom-width: var(--ojs-focus-width, 2px);
