@@ -118,6 +118,14 @@ export function RadioGroup({ onChange, className, choices, ...rest }: RadioGroup
     }
     attach(12)
 
+    // Clear every radio ring when focus leaves the GROUP entirely (e.g. arrowing past
+    // the last radio to the next control). The entry radio is marked by the group's
+    // delegation rather than a true focus, so its per-radio `blur` doesn't always fire
+    // and its ring can otherwise stick. "blur" is non-bubbling, so this fires only on a
+    // real exit, not on intra-group navigation between radios.
+    const onGroupBlur = () => clearAll()
+    try { __eventAPI.addEventListener(group, "blur", onGroupBlur) } catch {}
+
     // Switching to pointer modality suppresses focus rings; a click on the already
     // focused radio won't blur it, so clear explicitly when modality leaves keyboard.
     const unsub = subscribeModality(() => {
@@ -127,6 +135,7 @@ export function RadioGroup({ onChange, className, choices, ...rest }: RadioGroup
     return () => {
       cancelAnimationFrame(raf)
       unsub()
+      try { __eventAPI.removeEventListener(group, "blur", onGroupBlur) } catch {}
       for (const b of bound) {
         try {
           __eventAPI.removeEventListener(b.el, "focus", b.onF)
