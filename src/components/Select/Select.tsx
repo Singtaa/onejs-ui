@@ -27,8 +27,8 @@ export interface SelectProps {
 /**
  * Select built on the Overlay foundation: a focusable native-Button trigger plus
  * a portaled, anchored menu that flips/shifts and dismisses on outside-press or
- * Escape. Pointer-driven; in-menu keyboard navigation lands with the focus
- * manager (see issue #108).
+ * Escape. Pointer-driven; in-menu keyboard navigation is not yet supported
+ * (tracked in Singtaa/OneJS#108).
  */
 export function Select({
   value,

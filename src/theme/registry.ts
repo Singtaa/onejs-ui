@@ -11,9 +11,14 @@ import { lightTheme } from "./light"
  * themes are registered here.
  */
 const registry = new Map<string, ThemeTokens>()
+const RESERVED = new Set(["dark", "light"])
 
-/** Register a theme under a name (idempotent; last registration wins). */
+/** Register a theme under a name (idempotent; last registration wins). Warns when a
+ *  built-in (`dark`/`light`) is clobbered, since names share one global namespace. */
 export function registerTheme(name: string, tokens: ThemeTokens): void {
+  if (RESERVED.has(name)) {
+    console.warn(`[onejs-ui] registerTheme: overriding the built-in "${name}" theme`)
+  }
   registry.set(name, tokens)
 }
 
@@ -40,5 +45,7 @@ export function resolveTheme(theme: ThemeTokens | string): ThemeTokens {
   return tokens
 }
 
-registerTheme("dark", darkTheme)
-registerTheme("light", lightTheme)
+// Built-ins go straight into the map (not via registerTheme) so they don't trip the
+// reserved-name warning on initial load / hot reload.
+registry.set("dark", darkTheme)
+registry.set("light", lightTheme)

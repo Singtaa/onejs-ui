@@ -67,14 +67,16 @@ export function RadioGroup({ onChange, className, choices, ...rest }: RadioGroup
       }
     : undefined
 
-  // Keyboard focus ring for the radios. The RadioButtonGroup is a single focus stop
-  // — focus never lands on an individual radio, and the group marks a radio's
-  // `:focus` pseudo-state only once you arrow, so the radio you first land on isn't
-  // ringed by the USS `:focus` rule. But each RadioButton fires a FocusInEvent
-  // ("focus") when navigated to, including on entry, so we ring it from that event.
-  // Gated to keyboard modality (focus-visible); cleared on blur / when pointer takes
-  // over.
-  const choicesKey = (choices ?? []).join("")
+  // Keyboard focus ring for the radios. Under ARROW nav the focusController stays on
+  // the group and the group only marks a radio `:focus` after the first move, so the
+  // landing radio isn't ringed by the USS `:focus` rule; under TAB focus does land on
+  // the individual radio. Either way each RadioButton fires a FocusInEvent ("focus")
+  // when it's navigated to (including on entry), so we ring it from that event. Gated
+  // to keyboard modality (focus-visible); cleared on blur / when pointer takes over.
+  // (The deeper Tab-only repaint gap is tracked in Singtaa/OneJS#109.)
+  // Injective key so the listener-binding effect re-runs when the choice SET changes
+  // (a plain join("") collides, e.g. ["a","b"] vs ["ab"]).
+  const choicesKey = JSON.stringify(choices ?? [])
   useEffect(() => {
     const group = groupRef.current
     if (!group || typeof __eventAPI === "undefined") return

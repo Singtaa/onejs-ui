@@ -16,8 +16,12 @@
     border-left-color: var(--ojs-border);
     border-right-color: var(--ojs-border);
     background-color: var(--ojs-surface);
-    /* Skin slot: unchecked box sprite. White tint so the full-color sprite isn't
-       tinted dark by the native checkmark's default image-tint. */
+    /* Skin slot: unchecked box sprite. With no sprite the box is drawn purely by the
+       border + background-color above, and the native checkmark glyph is suppressed
+       (UITK USS keeps this `none`, it does not fall back to the panel theme's image),
+       so the flat un-themed checkbox is a bordered box that FILLS on check (see
+       :checked) rather than showing a glyph. White tint so a full-color theme sprite
+       isn't tinted dark by the native image-tint. */
     background-image: var(--ojs-checkbox-image, none);
     -unity-background-image-tint-color: rgb(255, 255, 255);
     margin-right: var(--ojs-space-2);
@@ -35,11 +39,24 @@
 
 .checkbox:checked .unity-toggle__checkmark {
     background-color: var(--ojs-primary);
+    /* Un-themed: the checked box is a solid primary fill (no glyph). A theme supplies
+       --ojs-checkbox-image-checked with the check baked into the sprite. */
     background-image: var(--ojs-checkbox-image-checked, none);
     border-top-color: var(--ojs-primary);
     border-bottom-color: var(--ojs-primary);
     border-left-color: var(--ojs-primary);
     border-right-color: var(--ojs-primary);
+}
+
+/* Neutralize the panel default theme's hardcoded-blue `.unity-toggle:focus
+   .unity-toggle__checkmark` border so it doesn't leak on POINTER focus (visible in
+   flat themes where the resting border is 1px). Holds the resting border color; the
+   keyboard `.focus-ring` rule below is ordered after, so it still wins. */
+.checkbox:focus .unity-toggle__checkmark {
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
 }
 
 /* Focus ring is class-driven by the focus-visible manager (no :focus rule). Sets

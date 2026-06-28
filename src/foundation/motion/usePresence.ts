@@ -17,8 +17,9 @@ export interface Presence {
  * between a closed state (e.g. opacity 0) and an open state, toggled by class.
  *
  * @param open       Desired visibility.
- * @param durationMs Time to keep mounted after closing; match the USS transition
- *                   duration (default 160ms, matching --ojs-motion-base).
+ * @param durationMs Time to keep mounted after closing; set it to your exit USS
+ *                   transition duration (default 160ms; motion tokens are
+ *                   --ojs-motion-fast 120ms / --ojs-motion-base 180ms).
  *
  * @example
  * const { mounted, status } = usePresence(open)

@@ -70,6 +70,17 @@
     border-right-color: var(--ojs-ring);
 }
 
+/* Neutralize the panel default theme's hardcoded-blue `.unity-button:focus` border
+   so it doesn't leak on POINTER focus (UI Toolkit has no :focus-visible). Holds the
+   resting (per-intent) border color; the keyboard ring above out-specifies this.
+   `.secondary:focus` below re-asserts the outlined intent's resting border. */
+.button:focus {
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+}
+
 .button:disabled {
     opacity: 0.5;
 }
@@ -93,6 +104,14 @@
 .secondary:active {
     background-color: var(--ojs-overlay-hover);
     background-image: none;
+}
+
+/* Re-assert the outlined resting border on pointer focus (out-orders `.button:focus`). */
+.secondary:focus {
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
 }
 
 /* Intent: ghost (text only). Clears any filled-button frame image. */

@@ -22,8 +22,8 @@ export interface FocusScopeProps {
  *
  * The trap listens for `focusout` bubbling up from descendants; if focus landed
  * outside the scope, it returns focus inside on the next frame. This works for
- * both Tab/Next/Previous and spatial arrow/D-pad navigation. Used by Dialog,
- * Drawer, Popover, and Menu in later milestones.
+ * both Tab/Next/Previous and spatial arrow/D-pad navigation. Used by Dialog and
+ * Drawer.
  */
 export function FocusScope({
   autoFocus = true,

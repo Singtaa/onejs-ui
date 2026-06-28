@@ -22,6 +22,7 @@ let initialized = false
 let modality: Modality = "keyboard"
 let current: any = null
 let rafPending = false
+let syncRaf = 0
 const listeners: Array<() => void> = []
 const subscribers = new Set<() => void>()
 
@@ -32,13 +33,17 @@ const subscribers = new Set<() => void>()
 function markRepaint(el: any, depth = 0) {
   if (!el || depth > 6) return
   try { el.MarkDirtyRepaint?.() } catch {}
-  let n = 0
-  try { n = el.childCount || 0 } catch {}
-  for (let i = 0; i < n; i++) {
-    let c: any = null
-    try { c = el[i] } catch {}
-    if (c) markRepaint(c, depth + 1)
-  }
+  // Walk the VISUAL hierarchy: the ring sub-parts (checkmark, dragger, track) live
+  // there, not in the logical contentContainer that `childCount`/`el[i]` resolve to.
+  try {
+    const h = el.hierarchy
+    const n = h?.childCount ?? 0
+    for (let i = 0; i < n; i++) {
+      let c: any = null
+      try { c = h.ElementAt(i) } catch {}
+      if (c) markRepaint(c, depth + 1)
+    }
+  } catch {}
 }
 
 function addRing(el: any) {
@@ -63,6 +68,7 @@ function clearRing() {
  * focus *events* never arrived (the nav-driven backbone).
  */
 function syncRingToFocused() {
+  if (!initialized) return // a deferred sync may fire after disposeFocusVisible()
   if (modality !== "keyboard") {
     clearRing()
     return
@@ -82,8 +88,9 @@ function syncRingToFocused() {
 function deferSync() {
   if (rafPending) return
   rafPending = true
-  requestAnimationFrame(() => {
+  syncRaf = requestAnimationFrame(() => {
     rafPending = false
+    syncRaf = 0
     syncRingToFocused()
   })
 }
@@ -154,6 +161,9 @@ export function disposeFocusVisible(): void {
   clearRing()
   for (const off of listeners) off()
   listeners.length = 0
+  if (syncRaf) { try { cancelAnimationFrame(syncRaf) } catch {} syncRaf = 0 }
+  rafPending = false
+  modality = "keyboard" // reset to default so a later re-init starts clean
   initialized = false
 }
 

@@ -3,7 +3,8 @@ import { cx } from "../../utils/cx"
 import styles from "./Switch.module.uss"
 
 export interface SwitchProps extends Omit<OjsToggleProps, "text" | "onChange"> {
-  /** `label` (from ToggleProps) renders to the left of the switch. */
+  /** Label rendered to the left of the switch. */
+  label?: string
   /** Called with the new on/off state. */
   onChange?: (checked: boolean) => void
 }

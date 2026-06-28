@@ -77,10 +77,16 @@
     border-right-color: var(--ojs-fg-subtle);
 }
 
-/* The ring itself is on the outer `.input` element (above). Here we only hold the
-   inner box's fill steady so the native :focus state doesn't retint it. */
-.input.focus-ring .unity-text-field__input,
-.input.focus-ring .unity-base-text-field__input {
+/* The ring itself is on the outer `.input` element (above). Hold the inner box's
+   border + fill at resting on ANY focus, so the panel default theme's hardcoded-blue
+   `.unity-text-field:focus .unity-text-field__input` (border + dark bg) neither leaks
+   on pointer focus nor double-rings alongside the outer ring on keyboard focus. */
+.input:focus .unity-text-field__input,
+.input:focus .unity-base-text-field__input {
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
     background-color: var(--ojs-surface);
 }
 

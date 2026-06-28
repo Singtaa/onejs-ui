@@ -20,6 +20,7 @@
     -unity-slice-right: var(--ojs-slider-rail-slice, 0);
     -unity-slice-top: var(--ojs-slider-rail-slice, 0);
     -unity-slice-bottom: var(--ojs-slider-rail-slice, 0);
+    -unity-slice-scale: var(--ojs-slider-rail-slice-scale, 1px);
 }
 
 .slider .unity-base-slider__dragger {
@@ -44,6 +45,14 @@
     border-bottom-width: 0;
     border-left-width: 0;
     border-right-width: 0;
+}
+
+/* Neutralize the panel default theme's hardcoded-blue `.unity-base-slider:focus
+   .unity-base-slider__dragger` background on focus (it paints the thumb blue). Holds
+   the resting fill; :hover below is ordered after so hover feedback still wins, and
+   the keyboard ring (`.focus-ring`, a border) is a separate property. */
+.slider:focus .unity-base-slider__dragger {
+    background-color: var(--ojs-primary);
 }
 
 .slider:hover .unity-base-slider__dragger {

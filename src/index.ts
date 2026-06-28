@@ -20,6 +20,7 @@ export {
   initFocusVisible,
   disposeFocusVisible,
   FOCUS_RING_CLASS,
+  RING_CLASS,
   getFocusedElement,
   focusElement,
   focusFirstIn,

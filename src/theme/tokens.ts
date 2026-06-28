@@ -14,16 +14,23 @@
  */
 export interface ThemeTokens {
   // Surfaces (background layers, low to high elevation)
+  /** Page/window background (lowest layer). */
   bg: string
+  /** Default raised surface: cards, inputs, control fills. */
   surface: string
+  /** A step above `surface` for stacked/elevated panels. */
   surfaceRaised: string
+  /** Highest layer: floating overlays (dialog/popover/menu bodies). */
   overlay: string
   /** Translucent fill for subtle hover/press on bordered/ghost controls. */
   overlayHover: string
 
   // Foreground (text) tones
+  /** Primary text. */
   fg: string
+  /** Secondary text (de-emphasized but readable): captions, helper text. */
   fgMuted: string
+  /** Faintest text/icon tone: placeholders, disabled-ish hints, dividers' lighter use. */
   fgSubtle: string
 
   // Lines & focus
@@ -35,7 +42,9 @@ export interface ThemeTokens {
    * Switch, Slider, and the `ring` primitive) so the ring is uniform and visible
    * even on sprite-skinned themes that zero out a control's resting border. Each
    * control falls back to `2px` via `var(--ojs-focus-width, 2px)`, so themes need
-   * not set it.
+   * not set it. Keep it small (1-3px): Button, Input, and Switch reserve a constant
+   * transparent border of this width at rest (so the ring never reflows), so a large
+   * value also enlarges their resting geometry.
    */
   focusWidth?: string
 
@@ -95,7 +104,12 @@ export interface ThemeTokens {
   cardSlice?: string
   /** `--ojs-card-slice-scale` */
   cardSliceScale?: string
-  /** `--ojs-button-image` (filled intents only; secondary/ghost clear it) */
+  /**
+   * `--ojs-button-image` (filled intents only; secondary/ghost clear it). Also
+   * applies to the `danger` intent (which has no separate frame slot), so the frame
+   * art should be intent-neutral — a transparent interior that lets the per-intent
+   * background-color show through — rather than baking in the primary color.
+   */
   buttonImage?: string
   /** `--ojs-button-image-hover` (filled-button frame on hover) */
   buttonImageHover?: string
@@ -117,7 +131,13 @@ export interface ThemeTokens {
   // preserve the flat, rounded look, so other themes are unaffected.
   /** `--ojs-checkbox-image` (unchecked box) */
   checkboxImage?: string
-  /** `--ojs-checkbox-image-checked` (checked box, with the check baked in) */
+  /**
+   * `--ojs-checkbox-image-checked` (checked box, with the check baked into the
+   * sprite). Without it, the flat (un-themed) checkbox indicates "checked" by
+   * filling the box with `primary` — it shows no separate check glyph (UITK's
+   * native checkmark image is suppressed by the skin slot). Supply a sprite with a
+   * check drawn in if you want a glyph.
+   */
   checkboxImageChecked?: string
   /** `--ojs-checkbox-border-width` (default `1px`; set `0` when the sprite has its own frame) */
   checkboxBorderWidth?: string
@@ -151,9 +171,12 @@ export interface ThemeTokens {
   sliderThumbRadius?: string
   /** `--ojs-slider-rail-slice` (9-slice inset for the rail, which stretches to width; default `0`) */
   sliderRailSlice?: string
+  /** `--ojs-slider-rail-slice-scale` (default `1px`; set <1px to downscale hi-density rail art so its end caps stay crisp, mirroring the other 9-slice surfaces) */
+  sliderRailSliceScale?: string
 
-  // Overlay surfaces (optional): a 9-slice frame shared by Dialog, Popover,
-  // DropdownMenu, Drawer, Toast, and Tooltip. No-op by default.
+  // Overlay surfaces (optional): a 9-slice frame consumed by Dialog, Popover,
+  // DropdownMenu, Drawer, and Select. No-op by default. (Toast keeps its accent
+  // border and Tooltip stays flat, so neither reads this slot.)
   /** `--ojs-surface-image` (9-slice frame for floating/overlay surfaces) */
   surfaceImage?: string
   /** `--ojs-surface-slice` (pixel inset, all four sides) */

@@ -42,13 +42,17 @@ export function applyTheme(theme: ThemeTokens | string, target?: any): void {
   // would otherwise win over our `color` and stay light in a light theme. Use the
   // literal value, not var(--ojs-fg): the runtime USS compiler doesn't reliably
   // resolve a var-in-var chain.
-  const nativeOverrides = [
-    `--unity-colors-default-text: ${tokens.fg};`,
-    `--unity-colors-label-text: ${tokens.fg};`,
-    `--unity-colors-input_field-text: ${tokens.fg};`,
-  ]
-    .map((d) => `    ${d}`)
-    .join("\n")
+  // Guard on `fg` (required, but a partial theme via `as any` could omit it) so we
+  // never emit `--unity-colors-default-text: undefined;`.
+  const nativeOverrides = tokens.fg
+    ? [
+        `--unity-colors-default-text: ${tokens.fg};`,
+        `--unity-colors-label-text: ${tokens.fg};`,
+        `--unity-colors-input_field-text: ${tokens.fg};`,
+      ]
+        .map((d) => `    ${d}`)
+        .join("\n")
+    : ""
 
   // Apply the theme font on the root so every descendant inherits it (UITK
   // `-unity-font-definition` is an inherited property). Only when the theme sets
@@ -57,7 +61,9 @@ export function applyTheme(theme: ThemeTokens | string, target?: any): void {
   const fontRule = tokens.font ? "\n    -unity-font-definition: var(--ojs-font);" : ""
 
   const uss = `.${ROOT_CLASS} {\n${decls}\n${nativeOverrides}${fontRule}\n}`
-  compileStyleSheet(uss, SHEET_NAME)
+  if (compileStyleSheet(uss, SHEET_NAME) === false) {
+    console.warn("[onejs-ui] applyTheme: theme stylesheet failed to compile")
+  }
 
   const root = target ?? (typeof __root !== "undefined" ? __root : undefined)
   try {
@@ -66,4 +72,15 @@ export function applyTheme(theme: ThemeTokens | string, target?: any): void {
     // Root not ready yet (e.g. called before render); the class is idempotent,
     // so a later applyTheme() call will tag it.
   }
+}
+
+/**
+ * Remove the applied theme: drop the variables sheet and the `ojs-root` class.
+ * Mainly for symmetry on `ThemeProvider` unmount / hot reload (the provider usually
+ * lives the panel's lifetime, so most apps never need this).
+ */
+export function removeTheme(target?: any): void {
+  try { removeStyleSheet?.(SHEET_NAME) } catch {}
+  const root = target ?? (typeof __root !== "undefined" ? __root : undefined)
+  try { root?.RemoveFromClassList?.(ROOT_CLASS) } catch {}
 }

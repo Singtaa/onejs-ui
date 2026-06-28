@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from "react"
-import { applyTheme } from "./applyTheme"
+import { applyTheme, removeTheme } from "./applyTheme"
 import { darkTheme } from "./dark"
 import { resolveTheme } from "./registry"
 import type { ThemeTokens } from "./tokens"
@@ -44,6 +44,10 @@ export function ThemeProvider({ theme = darkTheme, children }: ThemeProviderProp
   useLayoutEffect(() => {
     applyTheme(tokens)
   }, [tokens])
+
+  // Drop the theme sheet + root class on UNMOUNT only (separate [] effect, so a
+  // theme swap above doesn't briefly remove the sheet).
+  useLayoutEffect(() => () => removeTheme(), [])
 
   // Focus-visible ring manager: one-shot (not keyed on tokens, so a theme swap
   // doesn't tear it down). Lives for the panel's lifetime.
