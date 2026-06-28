@@ -51,7 +51,11 @@
 /* Neutralize the panel default theme's hardcoded-blue `.unity-toggle:focus
    .unity-toggle__checkmark` border so it doesn't leak on POINTER focus (visible in
    flat themes where the resting border is 1px). Holds the resting border color; the
-   keyboard `.focus-ring` rule below is ordered after, so it still wins. */
+   keyboard `.focus-ring` rule below is ordered after, so it still wins. Note: a CHECKED
+   box that is pointer-focused shows this neutral border over its primary fill rather
+   than the :checked primary border (equal specificity, this is ordered later). Accepted
+   as intentional: the primary fill still clearly reads as checked, and it's strictly
+   better than the pre-fix blue leak; keyboard focus is unaffected (the ring wins). */
 .checkbox:focus .unity-toggle__checkmark {
     border-top-color: var(--ojs-border);
     border-bottom-color: var(--ojs-border);

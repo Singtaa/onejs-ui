@@ -23,6 +23,7 @@ let modality: Modality = "keyboard"
 let current: any = null
 let rafPending = false
 let syncRaf = 0
+let initRaf = 0
 const listeners: Array<() => void> = []
 const subscribers = new Set<() => void>()
 
@@ -62,6 +63,47 @@ function clearRing() {
   }
 }
 
+// Collect a composite control's `.unity-radio-button` descendants (visual hierarchy).
+function collectRadios(el: any, out: any[], depth: number) {
+  if (!el || depth > 4 || out.length > 64) return
+  try {
+    const h = el.hierarchy
+    const n = h?.childCount ?? 0
+    for (let i = 0; i < n; i++) {
+      let c: any = null
+      try { c = h.ElementAt(i) } catch {}
+      if (!c) continue
+      let isRadio = false
+      try { isRadio = !!c.ClassListContains?.("unity-radio-button") } catch {}
+      if (isRadio) out.push(c)
+      else collectRadios(c, out, depth + 1)
+    }
+  } catch {}
+}
+
+// A RadioButtonGroup delegates focus to its radios but, on keyboard ENTRY, settles the
+// focus *leaf* on the group itself (Unity's historical "extra step"), so no radio gets
+// native `:focus` and the landing radio shows no ring. Promote the target radio to a
+// real focus leaf via Focus(): this routes through the genuine FocusController path, so
+// the radio gets native `:focus` (the `.radioGroup.focus-ring .unity-radio-button:focus`
+// rule then lights up, since the manager already rings the GROUP) and it self-clears on
+// exit — no stuck class. Focus() does NOT toggle `value`, so selection is unchanged, and
+// focusedElement keeps reporting the GROUP, so this doesn't re-trigger syncRingToFocused.
+function promoteRadioGroupEntry(el: any) {
+  let isGroup = false
+  try { isGroup = !!el?.ClassListContains?.("unity-radio-button-group") } catch {}
+  if (!isGroup) return
+  const radios: any[] = []
+  collectRadios(el, radios, 0)
+  if (radios.length === 0) return
+  let idx = 0 // prefer the checked radio (mirrors Unity), else the first
+  try {
+    const v = el.value
+    if (typeof v === "number" && v >= 0 && v < radios.length) idx = v
+  } catch {}
+  try { radios[idx]?.Focus?.() } catch {}
+}
+
 /**
  * Point the ring at whatever the panel reports as focused, when modality is
  * keyboard. Reads the live `focusController.focusedElement`, so it works even if
@@ -82,6 +124,9 @@ function syncRingToFocused() {
   if (current) removeRing(current)
   addRing(el)
   current = el
+  // Runs only on a FRESH focus (the isSameElement guard above returns early on re-sync
+  // of the same element), so a RadioButtonGroup's entry radio is promoted exactly once.
+  promoteRadioGroupEntry(el)
 }
 
 // Focus moves *after* the nav event, so read it on the next frame.
@@ -99,10 +144,11 @@ function deferSync() {
 // retrying a few frames since autofocus can land after init. Stops once something
 // is ringed or the user switches to pointer.
 function initialSync(attempts: number) {
+  initRaf = 0
   if (!initialized || modality === "pointer" || current) return
   syncRingToFocused()
   if (!current && attempts > 0) {
-    requestAnimationFrame(() => initialSync(attempts - 1))
+    initRaf = requestAnimationFrame(() => initialSync(attempts - 1))
   }
 }
 
@@ -162,6 +208,7 @@ export function disposeFocusVisible(): void {
   for (const off of listeners) off()
   listeners.length = 0
   if (syncRaf) { try { cancelAnimationFrame(syncRaf) } catch {} syncRaf = 0 }
+  if (initRaf) { try { cancelAnimationFrame(initRaf) } catch {} initRaf = 0 }
   rafPending = false
   modality = "keyboard" // reset to default so a later re-init starts clean
   initialized = false

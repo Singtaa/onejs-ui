@@ -59,6 +59,18 @@
     background-image: none;
 }
 
+/* Neutralize the built-in radio's hardcoded focus border so it doesn't leak (the
+   OneJS theme overrides Unity's focus color to blue) on POINTER focus, where the group
+   has no `.focus-ring` and the keyboard ring rule below never applies. Ordered BEFORE
+   :hover/:checked (equal specificity) so those still win when they apply, and below the
+   (0,5,0) keyboard ring so the ring still wins on nav focus. Holds the resting border. */
+.radioGroup .unity-radio-button:focus .unity-radio-button__checkmark-background {
+    border-top-color: var(--ojs-border);
+    border-bottom-color: var(--ojs-border);
+    border-left-color: var(--ojs-border);
+    border-right-color: var(--ojs-border);
+}
+
 .radioGroup .unity-radio-button:hover .unity-radio-button__checkmark-background {
     border-top-color: var(--ojs-fg-subtle);
     border-bottom-color: var(--ojs-fg-subtle);
@@ -77,12 +89,11 @@
 /* Focus ring for the radios: the native `:focus` pseudo-state the group sets on the
    navigated radio, while the group itself carries the focus-visible manager's
    `focus-ring` (so it's keyboard-modality-gated). This rings each radio as you arrow
-   to it and clears on exit. Width is set too, so the ring shows even when a theme
-   zeroes the resting border. KNOWN GAPS (both need a OneJS-core subtree-style-recompute,
-   Singtaa/OneJS#109): the radio you first land on isn't `:focus` until you move once;
-   and under Tab (focus lands on the radio, not the group) only the :checked radio
-   repaints. A JS class-toggled ring can't fix either — UI Toolkit fires no JS event to
-   clear an entry ring, so it would stick. */
+   to it and clears on exit. Width is set too, so the ring shows even when a theme zeroes
+   the resting border. The ENTRY radio is promoted to a real `:focus` leaf by the manager
+   (promoteRadioGroupEntry in focusVisible.ts calls radio.Focus()), so it rings on entry
+   too. KNOWN GAP: under Tab (focus lands on the radio itself, not the group, so the group
+   has no `.focus-ring`) this rule doesn't apply; that path is tracked in Singtaa/OneJS#109. */
 .radioGroup.focus-ring .unity-radio-button:focus .unity-radio-button__checkmark-background {
     border-top-width: var(--ojs-focus-width, 2px);
     border-bottom-width: var(--ojs-focus-width, 2px);

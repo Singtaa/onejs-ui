@@ -3,6 +3,7 @@ import {
   useCallback,
   useContext,
   useLayoutEffect,
+  useMemo,
   useState,
   type ReactNode,
 } from "react"
@@ -15,7 +16,7 @@ import { initFocusVisible, disposeFocusVisible } from "../foundation/focus/focus
 interface ThemeContextValue {
   /** The currently active token set (read for inline/dynamic values that can't use USS var()). */
   tokens: ThemeTokens
-  /** Swap the active theme by tokens object or registered name. Instant: recompiles the variables sheet, no re-render of the tree. */
+  /** Swap the active theme by tokens object or registered name. Instant: recompiles the variables sheet; only `useTheme()` consumers re-render, not the var()-styled tree. */
   setTheme: (theme: ThemeTokens | string) => void
 }
 
@@ -25,7 +26,9 @@ const ThemeContext = createContext<ThemeContextValue>({
 })
 
 export interface ThemeProviderProps {
-  /** Initial theme - a `ThemeTokens` object or a registered theme name. Defaults to `darkTheme`. */
+  /** Initial theme - a `ThemeTokens` object or a registered theme name. Defaults to
+   *  `darkTheme`. Read ONCE at mount; change the theme at runtime with `setTheme()` from
+   *  `useTheme()`, not by changing this prop (later prop changes are ignored). */
   theme?: ThemeTokens | string
   children?: ReactNode
 }
@@ -58,8 +61,12 @@ export function ThemeProvider({ theme = darkTheme, children }: ThemeProviderProp
 
   const setTheme = useCallback((next: ThemeTokens | string) => setTokens(resolveTheme(next)), [])
 
+  // Memoized so consumers only re-render when `tokens` actually changes, not on every
+  // unrelated re-render of ThemeProvider's parent.
+  const value = useMemo(() => ({ tokens, setTheme }), [tokens, setTheme])
+
   return (
-    <ThemeContext.Provider value={{ tokens, setTheme }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   )

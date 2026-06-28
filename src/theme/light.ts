@@ -2,8 +2,11 @@ import type { ThemeTokens } from "./tokens"
 
 /** Default light theme. Same scales as dark; swap with `setTheme(lightTheme)`. */
 export const lightTheme: ThemeTokens = {
+  // USS has no box-shadow, so elevation reads only through surface tone. In light mode
+  // we can't go brighter than white, so the base surface is a hair off-white and the
+  // raised/overlay layers are pure white, giving stacked panels a subtle elevation cue.
   bg: "#f6f7f9",
-  surface: "#ffffff",
+  surface: "#fbfcfd",
   surfaceRaised: "#ffffff",
   overlay: "#ffffff",
   overlayHover: "rgba(0, 0, 0, 0.05)",
