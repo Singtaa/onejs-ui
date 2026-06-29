@@ -26,7 +26,7 @@ export interface DropdownMenuProps {
 /**
  * Action menu on the Overlay foundation: a click-toggled trigger and a portaled,
  * anchored list of MenuItems that dismisses on select, outside-press, or Escape.
- * Pointer-driven; in-menu keyboard navigation is not yet supported (Singtaa/OneJS#108).
+ * Pointer-driven; in-menu keyboard navigation is not yet supported (Singtaa/OneJS#110).
  */
 export function DropdownMenu({
   trigger,
