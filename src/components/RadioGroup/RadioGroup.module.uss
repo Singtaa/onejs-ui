@@ -94,7 +94,7 @@
    (promoteRadioGroupEntry in focusVisible.ts calls radio.Focus()), so it rings on entry
    too. KNOWN GAP: under Tab (focus lands on the radio itself, not the group, so the group
    has no `.focus-ring`) this rule doesn't apply; that path is tracked in Singtaa/OneJS#109. */
-.radioGroup.focus-ring .unity-radio-button:focus .unity-radio-button__checkmark-background {
+.radioGroup:global(.focus-ring) .unity-radio-button:focus .unity-radio-button__checkmark-background {
     border-top-width: var(--ojs-focus-width, 2px);
     border-bottom-width: var(--ojs-focus-width, 2px);
     border-left-width: var(--ojs-focus-width, 2px);

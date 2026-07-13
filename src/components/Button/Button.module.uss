@@ -84,7 +84,7 @@
    selector for the ring: UI Toolkit's :focus doesn't reliably paint on navigation
    focus and can stick after pointer focus). Must stay after the :focus neutralizers
    above so it wins at equal specificity. */
-.button.focus-ring {
+.button:global(.focus-ring) {
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);

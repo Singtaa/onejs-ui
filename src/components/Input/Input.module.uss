@@ -23,7 +23,7 @@
     border-radius: var(--ojs-radius-md);
 }
 
-.input.focus-ring {
+.input:global(.focus-ring) {
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);

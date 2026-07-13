@@ -4,10 +4,9 @@ declare const __root: any
 
 /**
  * Class the manager toggles on the focused element when the input modality is
- * keyboard/gamepad. Named with a `focus` prefix on purpose: the CSS-module scoper
- * rewrites `ojs-*` classes but skips names starting with focus/hover/active/...,
- * so this survives verbatim and matches the `.focus-ring` selectors in component
- * `.module.uss` files.
+ * keyboard/gamepad. Component `.module.uss` files match it via
+ * `:global(.focus-ring)` (the CSS-module scoper leaves `:global(...)` segments
+ * unscoped), so this literal name reaches the compiled selectors verbatim.
  */
 export const FOCUS_RING_CLASS = "focus-ring"
 

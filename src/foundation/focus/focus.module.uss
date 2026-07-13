@@ -15,7 +15,7 @@
 
 /* Focus ring is class-driven by the focus-visible manager (no :focus rule), for
    ad-hoc focusable Views using the `ring` primitive. */
-.ring.focus-ring {
+.ring:global(.focus-ring) {
     border-top-color: var(--ojs-ring);
     border-bottom-color: var(--ojs-ring);
     border-left-color: var(--ojs-ring);
