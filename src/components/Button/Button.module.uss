@@ -56,7 +56,7 @@
 }
 
 .button:active {
-    background-color: var(--ojs-primary-hover);
+    background-color: var(--ojs-primary-active);
     background-image: var(--ojs-button-image-active, none);
 }
 
@@ -112,7 +112,7 @@
 }
 
 .secondary:active {
-    background-color: var(--ojs-overlay-hover);
+    background-color: var(--ojs-overlay-active);
     background-image: none;
 }
 
@@ -129,7 +129,7 @@
 }
 
 .ghost:active {
-    background-color: var(--ojs-overlay-hover);
+    background-color: var(--ojs-overlay-active);
     background-image: none;
 }
 
@@ -140,11 +140,11 @@
 }
 
 .danger:hover {
-    background-color: var(--ojs-danger);
+    background-color: var(--ojs-danger-hover);
 }
 
 .danger:active {
-    background-color: var(--ojs-danger);
+    background-color: var(--ojs-danger-active);
 }
 
 /* Sizes */

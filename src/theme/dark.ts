@@ -7,6 +7,7 @@ export const darkTheme: ThemeTokens = {
   surfaceRaised: "#1d2027",
   overlay: "#23262e",
   overlayHover: "rgba(255, 255, 255, 0.07)",
+  overlayActive: "rgba(255, 255, 255, 0.13)",
 
   fg: "#e6e7ea",
   fgMuted: "#a0a3ab",
@@ -17,9 +18,12 @@ export const darkTheme: ThemeTokens = {
 
   primary: "#4c8bf5",
   primaryHover: "#3d78db",
+  primaryActive: "#3167c2",
   onPrimary: "#ffffff",
 
   danger: "#e5484d",
+  dangerHover: "#d13d42",
+  dangerActive: "#b83438",
   onDanger: "#ffffff",
   success: "#46a758",
   warning: "#f5a623",

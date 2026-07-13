@@ -22,8 +22,15 @@ export interface ThemeTokens {
   surfaceRaised: string
   /** Highest layer: floating overlays (dialog/popover/menu bodies). */
   overlay: string
-  /** Translucent fill for subtle hover/press on bordered/ghost controls. */
+  /** Translucent fill for subtle hover on bordered/ghost controls. */
   overlayHover: string
+  /**
+   * Translucent fill for the pressed (`:active`) state of bordered/ghost controls.
+   * Optional; `applyTheme()` falls back to `overlayHover`, so themes that don't set
+   * it keep today's behavior (no distinct pressed tint). Use a stronger alpha than
+   * `overlayHover` so click-hold reads as a state change.
+   */
+  overlayActive?: string
 
   // Foreground (text) tones
   /** Primary text. */
@@ -51,10 +58,20 @@ export interface ThemeTokens {
   // Accent / primary action
   primary: string
   primaryHover: string
+  /**
+   * Pressed (`:active`) fill for primary/filled buttons. Optional; `applyTheme()`
+   * falls back to `primaryHover`. Pick a step past `primaryHover` (usually darker)
+   * so click-hold reads as a state change.
+   */
+  primaryActive?: string
   onPrimary: string
 
   // Status
   danger: string
+  /** Hover fill for danger buttons. Optional; `applyTheme()` falls back to `danger`. */
+  dangerHover?: string
+  /** Pressed (`:active`) fill for danger buttons. Optional; `applyTheme()` falls back to `dangerHover`. */
+  dangerActive?: string
   onDanger: string
   success: string
   warning: string

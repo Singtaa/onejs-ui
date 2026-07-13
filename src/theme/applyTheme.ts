@@ -29,7 +29,18 @@ function camelToKebab(s: string): string {
  *   global render root (`__root`).
  */
 export function applyTheme(theme: ThemeTokens | string, target?: any): void {
-  const tokens = resolveTheme(theme)
+  const resolved = resolveTheme(theme)
+
+  // Materialize interaction-state fallbacks so components can reference these vars
+  // directly (the runtime USS compiler doesn't reliably resolve a var-in-var chain,
+  // so `var(--ojs-primary-active, var(--ojs-primary-hover))` is not an option).
+  const tokens: ThemeTokens = {
+    ...resolved,
+    overlayActive: resolved.overlayActive ?? resolved.overlayHover,
+    primaryActive: resolved.primaryActive ?? resolved.primaryHover,
+    dangerHover: resolved.dangerHover ?? resolved.danger,
+    dangerActive: resolved.dangerActive ?? resolved.dangerHover ?? resolved.danger,
+  }
 
   const decls = Object.entries(tokens)
     .filter(([, value]) => value !== undefined && value !== null)

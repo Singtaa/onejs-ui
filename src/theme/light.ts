@@ -10,6 +10,7 @@ export const lightTheme: ThemeTokens = {
   surfaceRaised: "#ffffff",
   overlay: "#ffffff",
   overlayHover: "rgba(0, 0, 0, 0.05)",
+  overlayActive: "rgba(0, 0, 0, 0.10)",
 
   fg: "#1a1c1f",
   fgMuted: "#5a5e66",
@@ -20,9 +21,12 @@ export const lightTheme: ThemeTokens = {
 
   primary: "#3b82f6",
   primaryHover: "#2f6fe0",
+  primaryActive: "#265dc4",
   onPrimary: "#ffffff",
 
   danger: "#dc2626",
+  dangerHover: "#c52222",
+  dangerActive: "#ab1e1e",
   onDanger: "#ffffff",
   success: "#16a34a",
   warning: "#d97706",
