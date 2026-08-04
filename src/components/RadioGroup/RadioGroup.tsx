@@ -10,6 +10,8 @@ registerElement("radio-button-group", CS.UnityEngine.UIElements.RadioButtonGroup
 const NativeRadioGroup = createComponent("radio-button-group")
 
 export interface RadioGroupProps {
+  /** VisualElement.name, for UQuery lookup (parity with the other controls). */
+  name?: string
   /** Selected index, or -1 for none. */
   value?: number
   /** The option labels. */
