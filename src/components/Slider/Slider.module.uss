@@ -18,7 +18,7 @@
     border-left-width: 0;
     border-right-width: 0;
     background-color: var(--ojs-fg-subtle);
-    /* Skin slot: rail sprite (9-sliced - the rail stretches to the slider width). */
+    /* Skin slot: rail sprite (9-sliced, the rail stretches to the slider width). */
     background-image: var(--ojs-slider-rail-image, none);
     -unity-slice-left: var(--ojs-slider-rail-slice, 0);
     -unity-slice-right: var(--ojs-slider-rail-slice, 0);
