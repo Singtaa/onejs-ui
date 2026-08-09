@@ -5,7 +5,7 @@
 .input {
     margin-top: 0;
     margin-bottom: 0;
-    /* The focus ring lives on this OUTER field element — it is the element that
+    /* The focus ring lives on this OUTER field element - it is the element that
        gains `focus-ring` on keyboard focus (the focusController focuses the
        TextField root, not the inner box). A constant transparent border at the
        focus width reserves layout (focus swaps only color, no reflow) and rings the

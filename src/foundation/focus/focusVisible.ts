@@ -86,7 +86,7 @@ function collectRadios(el: any, out: any[], depth: number) {
 // real focus leaf via Focus(): this routes through the genuine FocusController path, so
 // the radio gets native `:focus` (the `.radioGroup.focus-ring .unity-radio-button:focus`
 // rule then lights up, since the manager already rings the GROUP) and it self-clears on
-// exit — no stuck class. Focus() does NOT toggle `value`, so selection is unchanged, and
+// exit - no stuck class. Focus() does NOT toggle `value`, so selection is unchanged, and
 // focusedElement keeps reporting the GROUP, so this doesn't re-trigger syncRingToFocused.
 function promoteRadioGroupEntry(el: any) {
   let isGroup = false
@@ -168,7 +168,7 @@ function setModality(next: Modality) {
 /**
  * Initialize the global focus-visible manager (idempotent). Wires modality +
  * focus tracking on `__root` and toggles `FOCUS_RING_CLASS` imperatively on the
- * focused element — never via React state, which would re-render and blur it.
+ * focused element - never via React state, which would re-render and blur it.
  * Called automatically by `ThemeProvider`; also exposed for manual setups.
  */
 export function initFocusVisible(): void {

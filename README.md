@@ -1,6 +1,6 @@
 # onejs-ui
 
-Themeable React component library for [OneJS v3](https://onejs.com) — built for **Unity UI Toolkit**, GPU-rendered, gamepad/keyboard-native. Not a web library ported over.
+Themeable React component library for [OneJS v3](https://onejs.com) - built for **Unity UI Toolkit**, GPU-rendered, gamepad/keyboard-native. Not a web library ported over.
 
 ```tsx
 import { ThemeProvider, Card, Heading, Button, darkTheme } from "onejs-ui"
@@ -8,18 +8,18 @@ import { ThemeProvider, Card, Heading, Button, darkTheme } from "onejs-ui"
 
 ## Highlights
 
-- **~20 components** — layout, typography, form controls, and overlays.
-- **Instant theming** — light/dark (or your own) via USS custom properties. A theme swap recompiles one small variables sheet; Unity re-resolves the cascade natively, with no React re-render.
-- **Focus-visible keyboard/gamepad focus rings** — a real, themeable focus ring that follows navigation and suppresses itself on pointer use (like the web's `:focus-visible`). This is wired up for you (a couple of native-control edge cases are noted under Focus & navigation).
-- **Native-backed form controls** — Checkbox/Switch/Slider/Input/Radio are built on the corresponding UI Toolkit controls, so they're genuine focus targets with full keyboard/IME behavior, restyled with theme tokens.
-- **Portal-based overlays** — Popover, Dialog, DropdownMenu, Drawer, Toast, Tooltip on a shared positioning + dismissal + motion foundation.
-- **Ships raw TS/TSX** — no build step; your app's esbuild bundles it (same model as `onejs-react`).
+- **~20 components** - layout, typography, form controls, and overlays.
+- **Instant theming** - light/dark (or your own) via USS custom properties. A theme swap recompiles one small variables sheet; Unity re-resolves the cascade natively, with no React re-render.
+- **Focus-visible keyboard/gamepad focus rings** - a real, themeable focus ring that follows navigation and suppresses itself on pointer use (like the web's `:focus-visible`). This is wired up for you (a couple of native-control edge cases are noted under Focus & navigation).
+- **Native-backed form controls** - Checkbox/Switch/Slider/Input/Radio are built on the corresponding UI Toolkit controls, so they're genuine focus targets with full keyboard/IME behavior, restyled with theme tokens.
+- **Portal-based overlays** - Popover, Dialog, DropdownMenu, Drawer, Toast, Tooltip on a shared positioning + dismissal + motion foundation.
+- **Ships raw TS/TSX** - no build step; your app's esbuild bundles it (same model as `onejs-react`).
 
 ## Requirements
 
 - **OneJS v3 runtime.** The focus ring's reliability depends on the runtime's tick-based `focuschange` signal. Use a OneJS build that includes it; with an older runtime the ring degrades gracefully to nav-event-driven only.
 - **Peer dependencies:** `react` (18 or 19) and `onejs-react`.
-- **Unity UI Toolkit coupling.** Because the form controls restyle *real* native UITK controls, the component sheets select UITK-internal element classes (`unity-toggle__checkmark`, `unity-base-slider__dragger`, `unity-text-field__input`, `unity-radio-button__checkmark-background`, …) and `applyTheme` overrides a few `--unity-colors-*` panel vars. These are stable but undocumented Unity internals, verified on Unity 6.x — a UITK control-template rename could require updating the matching selectors.
+- **Unity UI Toolkit coupling.** Because the form controls restyle *real* native UITK controls, the component sheets select UITK-internal element classes (`unity-toggle__checkmark`, `unity-base-slider__dragger`, `unity-text-field__input`, `unity-radio-button__checkmark-background`, …) and `applyTheme` overrides a few `--unity-colors-*` panel vars. These are stable but undocumented Unity internals, verified on Unity 6.x - a UITK control-template rename could require updating the matching selectors.
 
 ## Install
 
@@ -29,7 +29,7 @@ npm install onejs-ui
 
 ## Quickstart
 
-Wrap your app in `<ThemeProvider>` — that applies the theme **and** initializes the focus-visible manager. Everything inside gets themed components with working focus rings.
+Wrap your app in `<ThemeProvider>` - that applies the theme **and** initializes the focus-visible manager. Everything inside gets themed components with working focus rings.
 
 ```tsx
 import { useState } from "react"
@@ -86,7 +86,7 @@ Controlled inputs take `value` + `onChange(value)` (a plain value, not an event)
 
 ## Theming
 
-A theme is a plain token object (`ThemeTokens`). `applyTheme(tokens)` emits it as `--ojs-*` USS custom properties on the render root; `<ThemeProvider>` wraps that and exposes `useTheme()` → `{ tokens, setTheme }`. Swapping themes is a single, cheap operation — Unity re-resolves `var()` against the new values with no React re-render.
+A theme is a plain token object (`ThemeTokens`). `applyTheme(tokens)` emits it as `--ojs-*` USS custom properties on the render root; `<ThemeProvider>` wraps that and exposes `useTheme()` → `{ tokens, setTheme }`. Swapping themes is a single, cheap operation - Unity re-resolves `var()` against the new values with no React re-render.
 
 ```tsx
 import { ThemeProvider, darkTheme, type ThemeTokens } from "onejs-ui"
@@ -107,11 +107,11 @@ Themes can also dress `Card` and `Button` in **9-slice frames** purely through o
 
 For overlays and custom regions:
 
-- `<FocusScope>` — autofocus, focus restoration, and an optional focus trap (used by `Dialog`/`Drawer`).
-- `useFocusVisible()` — `{ modality: "pointer" | "keyboard" }`, for app-level hints.
-- `RING_CLASS` — add it to your own focusable View and the manager paints the themed ring on keyboard focus (the reusable `ring` primitive). (`FOCUS_RING_CLASS` is the class the manager toggles internally.)
+- `<FocusScope>` - autofocus, focus restoration, and an optional focus trap (used by `Dialog`/`Drawer`).
+- `useFocusVisible()` - `{ modality: "pointer" | "keyboard" }`, for app-level hints.
+- `RING_CLASS` - add it to your own focusable View and the manager paints the themed ring on keyboard focus (the reusable `ring` primitive). (`FOCUS_RING_CLASS` is the class the manager toggles internally.)
 
-**Known limitations.** Two native-control edge cases are tracked upstream: under **Tab**, a `RadioGroup` rings only the selected radio (arrow nav rings each correctly) — a UI Toolkit style-recompute gap, [Singtaa/OneJS#109](https://github.com/Singtaa/OneJS/issues/109); and in-menu keyboard navigation for `Select` is not yet wired, [Singtaa/OneJS#108](https://github.com/Singtaa/OneJS/issues/108).
+**Known limitations.** Two native-control edge cases are tracked upstream: under **Tab**, a `RadioGroup` rings only the selected radio (arrow nav rings each correctly) - a UI Toolkit style-recompute gap, [Singtaa/OneJS#109](https://github.com/Singtaa/OneJS/issues/109); and in-menu keyboard navigation for `Select` is not yet wired, [Singtaa/OneJS#108](https://github.com/Singtaa/OneJS/issues/108).
 
 ## Design principles
 

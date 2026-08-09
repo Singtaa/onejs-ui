@@ -124,8 +124,8 @@ export interface ThemeTokens {
   /**
    * `--ojs-button-image` (filled intents only; secondary/ghost clear it). Also
    * applies to the `danger` intent (which has no separate frame slot), so the frame
-   * art should be intent-neutral — a transparent interior that lets the per-intent
-   * background-color show through — rather than baking in the primary color.
+   * art should be intent-neutral - a transparent interior that lets the per-intent
+   * background-color show through - rather than baking in the primary color.
    */
   buttonImage?: string
   /** `--ojs-button-image-hover` (filled-button frame on hover) */
@@ -151,7 +151,7 @@ export interface ThemeTokens {
   /**
    * `--ojs-checkbox-image-checked` (checked box, with the check baked into the
    * sprite). Without it, the flat (un-themed) checkbox indicates "checked" by
-   * filling the box with `primary` — it shows no separate check glyph (UITK's
+   * filling the box with `primary` - it shows no separate check glyph (UITK's
    * native checkmark image is suppressed by the skin slot). Supply a sprite with a
    * check drawn in if you want a glyph.
    */
