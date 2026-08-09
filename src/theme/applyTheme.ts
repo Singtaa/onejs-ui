@@ -23,7 +23,7 @@ function camelToKebab(s: string): string {
  * themes is a single crossing with no React re-render and no per-element style
  * re-marshal. Call once at startup, then again whenever the theme changes.
  *
- * @param theme The theme to apply - a `ThemeTokens` object or a registered theme
+ * @param theme The theme to apply: a `ThemeTokens` object or a registered theme
  *   name (e.g. `"dark"`, `"light"`, or a premade theme's name).
  * @param target Optional element to carry the `ojs-root` class. Defaults to the
  *   global render root (`__root`).
@@ -49,7 +49,7 @@ export function applyTheme(theme: ThemeTokens | string, target?: any): void {
 
   // Map Unity's native control text vars to our foreground. The default runtime
   // theme (UnityDefaultRuntimeTheme.tss) sets these to dark-mode light values, and
-  // native sub-elements (TextField text, native control labels) read them - which
+  // native sub-elements (TextField text, native control labels) read them, which
   // would otherwise win over our `color` and stay light in a light theme. Use the
   // literal value, not var(--ojs-fg): the runtime USS compiler doesn't reliably
   // resolve a var-in-var chain.
@@ -67,7 +67,7 @@ export function applyTheme(theme: ThemeTokens | string, target?: any): void {
 
   // Apply the theme font on the root so every descendant inherits it (UITK
   // `-unity-font-definition` is an inherited property). Only when the theme sets
-  // one - otherwise the panel's default font is left untouched. Because it lives
+  // one: otherwise the panel's default font is left untouched. Because it lives
   // in this same sheet, a theme swap correctly clears it when the next theme has none.
   const fontRule = tokens.font ? "\n    -unity-font-definition: var(--ojs-font);" : ""
 

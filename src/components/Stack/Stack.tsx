@@ -36,7 +36,7 @@ const JUSTIFY: Record<StackJustify, ViewStyle["justifyContent"]> = {
 /**
  * Flex container with a `gap`. UI Toolkit has no `gap` property, so spacing is
  * inserted as zero-content spacer elements between children. (Spacers, rather
- * than a margin cloned onto each child, so `gap` works for ANY child - including
+ * than a margin cloned onto each child, so `gap` works for ANY child, including
  * custom components that don't forward `style`. Note: this adds N-1 elements;
  * for very large lists prefer explicit margins or a virtualized list.)
  */

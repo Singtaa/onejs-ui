@@ -62,7 +62,7 @@ export function Drawer({
   const { mounted, status } = usePresence(open, EXIT_MS)
 
   // Escape via the global key path; outside-press is handled by the scrim's own
-  // click (a real element event - reliable across the portal boundary).
+  // click (a real element event: reliable across the portal boundary).
   useDismiss(panelRef, onClose, {
     enabled: open,
     escape: dismissOnEscape,

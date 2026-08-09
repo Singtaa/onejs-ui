@@ -33,7 +33,7 @@ const sizeClass: Record<ButtonSize, string | undefined> = {
 
 /**
  * Themed button on the native UI Toolkit Button, which (unlike a raw View) is a
- * proper navigation/pointer focus target - so the focus ring follows keyboard,
+ * proper navigation/pointer focus target, so the focus ring follows keyboard,
  * gamepad, and pointer focus. The default theme's button-state rules were lowered
  * to single-class specificity so these token-driven rules win.
  *

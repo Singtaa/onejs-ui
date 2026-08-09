@@ -33,7 +33,7 @@ export interface RadioGroupProps {
  * focus-visible manager, which calls `radio.Focus()` on the landing radio so it becomes
  * a real focus leaf with native `:focus` (see promoteRadioGroupEntry in focusVisible.ts).
  * That routes through the genuine focus path, so it rings on entry and self-clears on
- * exit without a stuck class - no core change (Singtaa/OneJS#109) required.
+ * exit without a stuck class: no core change (Singtaa/OneJS#109) required.
  */
 export function RadioGroup({ onChange, className, choices, value, ...rest }: RadioGroupProps) {
   // The group's onChange also receives the individual RadioButtons' bool change
