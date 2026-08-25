@@ -55,6 +55,12 @@ jobs:
           cache: npm
           cache-dependency-path: onejs-ui/package-lock.json
 
+      # onejs-react is compiled from source as part of this typecheck, so it needs
+      # its own dependencies present: tsc resolves an import inside it
+      # relative to that folder, not to this one.
+      - run: npm ci
+        working-directory: onejs-react
+
       - run: npm ci
 
       - run: npm run typecheck
