@@ -90,7 +90,7 @@ export default tseslint.config(
             // imports from C# namespaces are the sanctioned style and manual
             // CS.* destructuring is for runtime-internal code only.
             "no-restricted-syntax": ["error", {
-                selector: "JSXAttribute[name.name='className'] BinaryExpression[operator='+']",
+                selector: "JSXAttribute[name.name='className'] > JSXExpressionContainer > BinaryExpression[operator='+']",
                 message: "Assembled class names are invisible to the Tailwind scanner. Use whole class names in each branch, or add the assembled names to the safelist.",
             }, {
                 selector: "VariableDeclarator[id.type='ObjectPattern'][init.object.name='CS']",
