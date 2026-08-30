@@ -90,6 +90,9 @@ export default tseslint.config(
             // imports from C# namespaces are the sanctioned style and manual
             // CS.* destructuring is for runtime-internal code only.
             "no-restricted-syntax": ["error", {
+                selector: "CallExpression[callee.name='useKeyDown']",
+                message: "Deprecated: useKeyDown fires every frame while held, not once on the press. Use useKeyHeld (held) or useKeyPress (edge).",
+            }, {
                 selector: "JSXAttribute[name.name='className'] > JSXExpressionContainer > BinaryExpression[operator='+']",
                 message: "Assembled class names are invisible to the Tailwind scanner. Use whole class names in each branch, or add the assembled names to the safelist.",
             }, {
