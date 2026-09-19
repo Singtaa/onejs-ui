@@ -113,5 +113,8 @@ export type { ToastProviderProps, ToastOptions, ToastTone, ToastPlacement } from
 export { Tooltip } from "./components/Tooltip"
 export type { TooltipProps } from "./components/Tooltip"
 
+export { ScrollView } from "./components/ScrollView"
+export type { ScrollViewProps } from "./components/ScrollView"
+
 // Utilities
 export { cx } from "./utils/cx"

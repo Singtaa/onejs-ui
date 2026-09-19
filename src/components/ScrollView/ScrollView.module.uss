@@ -1,0 +1,85 @@
+/* Restyle the native ScrollView's scrollbar (the Scroller: a slider whose dragger
+   is the thumb). Rules match the theme's `.unity-scroller...` specificity so they
+   win by load order. */
+
+.scrollView .unity-scroller {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: var(--ojs-scrollbar-radius, var(--ojs-radius-sm));
+    /* Skin slot: groove sprite (9-sliced, the groove stretches along the bar). */
+    background-image: var(--ojs-scrollbar-image, none);
+    -unity-slice-left: var(--ojs-scrollbar-slice, 0);
+    -unity-slice-right: var(--ojs-scrollbar-slice, 0);
+    -unity-slice-top: var(--ojs-scrollbar-slice, 0);
+    -unity-slice-bottom: var(--ojs-scrollbar-slice, 0);
+    -unity-slice-scale: var(--ojs-scrollbar-slice-scale, 1px);
+}
+
+/* Size the bar, and only paint the groove while the thumb shows: with
+   scrollerVisibility Auto the Scroller is always laid out and the theme's opaque
+   10px groove would show even when there is nothing to scroll. */
+.scrollView .unity-scroller--vertical {
+    width: var(--ojs-scrollbar-width, 10px);
+    background-color: rgba(0, 0, 0, 0);
+    background-image: none;
+}
+
+.scrollView .unity-scroller--horizontal {
+    height: var(--ojs-scrollbar-width, 10px);
+    background-color: rgba(0, 0, 0, 0);
+    background-image: none;
+}
+
+.scrollView:global(.unity-scroll-view--has-thumb) .unity-scroller--vertical {
+    background-color: var(--ojs-scrollbar, var(--ojs-fg-subtle));
+    background-image: var(--ojs-scrollbar-image, none);
+}
+
+.scrollView:global(.unity-scroll-view--has-thumb) .unity-scroller--horizontal {
+    background-color: var(--ojs-scrollbar, var(--ojs-fg-subtle));
+    background-image: var(--ojs-scrollbar-image, none);
+}
+
+.scrollView .unity-scroller__low-button,
+.scrollView .unity-scroller__high-button {
+    display: none;
+}
+
+.scrollView .unity-scroller .unity-base-slider__tracker {
+    background-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+/* The thumb: the Scroller's slider dragger. Track the bar width so the padding
+   (2px inset) and radius keep proportion when a theme widens the bar. */
+.scrollView .unity-scroller .unity-base-slider__dragger {
+    width: auto;
+    min-width: var(--ojs-scrollbar-thumb-min, 6px);
+    border-radius: var(--ojs-scrollbar-thumb-radius, var(--ojs-radius-sm));
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    background-color: var(--ojs-scrollbar-thumb, var(--ojs-fg-subtle));
+    /* Skin slot: thumb sprite. */
+    background-image: var(--ojs-scrollbar-thumb-image, none);
+    transition-property: background-color;
+    transition-duration: var(--ojs-motion-fast);
+    transition-timing-function: var(--ojs-ease);
+}
+
+.scrollView .unity-scroller:hover .unity-base-slider__dragger {
+    background-color: var(--ojs-scrollbar-thumb-hover, var(--ojs-fg-muted));
+}
+
+.scrollView .unity-scroller:active .unity-base-slider__dragger {
+    background-color: var(--ojs-scrollbar-thumb-active, var(--ojs-fg-muted));
+}
+
+/* Hide the scroller's focus ring: it draws an outline around the bar when
+   scrolled to via keyboard. The scroll view itself is not a focus target. */
+.scrollView .unity-scroller:focus .unity-base-slider__dragger {
+    background-color: var(--ojs-scrollbar-thumb, var(--ojs-fg-subtle));
+}
