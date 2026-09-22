@@ -38,14 +38,13 @@ export interface MenuNavigation {
  * The container is the focus target, not the rows. Rows stay unfocusable Views,
  * so the highlight is a class this hook owns rather than real focus, and
  * UI Toolkit is never asked to move focus between rows. That is deliberate:
- * NavigationMoveEvent's default is to move focus, and the bridge does not mirror
- * `preventDefault()` onto navigation events the way it does for pointer and
- * wheel events (QuickJSUIBridge.OnNavigationMove does not call
- * ApplyNativeSuppression; filed as Singtaa/OneJS#122), so JS cannot currently
- * stop that default. Making the
- * rows focusable would mean competing with a focus move that cannot be
- * cancelled. Keeping one focus target inside a FocusScope means the trap has
- * somewhere to put focus back, and the arithmetic stays entirely ours.
+ * NavigationMoveEvent's default is to move focus, and before OneJS 3.4.7 the
+ * bridge did not mirror `preventDefault()` onto navigation events
+ * (Singtaa/OneJS#122), so JS could not stop that default. onejs-ui still runs on
+ * those versions, where making the rows focusable would mean competing with a
+ * focus move that cannot be cancelled. Keeping one focus target inside a
+ * FocusScope also means the trap has somewhere to put focus back, and the
+ * arithmetic stays entirely ours.
  *
  * Escape must be handled through `onClose`. The Overlay foundation does
  * dismiss on Escape, but it does so with a listener on `__root`, and a key
