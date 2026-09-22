@@ -38,11 +38,17 @@ export interface SelectProps {
  * a portaled, anchored menu that flips/shifts and dismisses on outside-press or
  * Escape.
  *
- * Keyboard: opening the menu puts focus on it (FocusScope, which traps while
- * open and returns focus to the trigger on close). Up/Down move the highlight
- * and wrap, Home/End jump to the ends, Enter/Space/gamepad-South choose,
- * Escape closes. Disabled options are stepped over rather than highlighted. The
- * highlight is a class rather than real focus; see useMenuNavigation for why.
+ * Keyboard: opening the menu puts focus on it and closing returns focus to the
+ * trigger, both via FocusScope. Up/Down move the highlight and wrap, Home/End
+ * jump to the ends, Enter/Space/gamepad-South choose, Escape closes. Disabled
+ * options are stepped over rather than highlighted. The highlight is a class
+ * rather than real focus; see useMenuNavigation for why.
+ *
+ * FocusScope's focus TRAP is not claimed here, because it does not currently
+ * work for anyone: it listens for `onFocusOut`, which onejs-react maps to a
+ * `focusout` event the bridge never emits (it emits `blur`). Measured in a
+ * panel; filed as Singtaa/OneJS#123. Autofocus and focus restoration do work,
+ * since neither depends on a focus event arriving.
  */
 export function Select({
   value,
@@ -77,6 +83,7 @@ export function Select({
     count: options.length,
     isDisabled: (i) => !!options[i]?.disabled,
     onCommit: (index) => choose(index, synthesizedClick()),
+    onClose: () => setOpen(false),
     initialIndex: selectedIndex,
   })
 

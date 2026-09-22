@@ -41,14 +41,19 @@ export interface MenuNavigation {
  * NavigationMoveEvent's default is to move focus, and the bridge does not mirror
  * `preventDefault()` onto navigation events the way it does for pointer and
  * wheel events (QuickJSUIBridge.OnNavigationMove does not call
- * ApplyNativeSuppression), so JS cannot currently stop that default. Making the
+ * ApplyNativeSuppression; filed as Singtaa/OneJS#122), so JS cannot currently
+ * stop that default. Making the
  * rows focusable would mean competing with a focus move that cannot be
  * cancelled. Keeping one focus target inside a FocusScope means the trap has
  * somewhere to put focus back, and the arithmetic stays entirely ours.
  *
- * Escape is reported through `onClose`, but the Overlay foundation also
- * dismisses on Escape globally, so a caller inside an Overlay can leave
- * `onClose` off and let that handle it.
+ * Escape must be handled through `onClose`. The Overlay foundation does
+ * dismiss on Escape, but it does so with a listener on `__root`, and a key
+ * event whose target is inside the portaled overlay does not reach it: the
+ * menu's own focus is what routes the key, and the menu is portaled out of the
+ * main tree. Measured in a panel, not reasoned about. Leaving `onClose` off
+ * therefore leaves a focusable menu with no Escape at all, which is the
+ * regression making the container focusable would otherwise have introduced.
  */
 export function useMenuNavigation({
     open,

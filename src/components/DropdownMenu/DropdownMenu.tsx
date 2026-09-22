@@ -59,10 +59,11 @@ export interface DropdownMenuProps {
  * Action menu on the Overlay foundation: a click-toggled trigger and a portaled,
  * anchored list of MenuItems that dismisses on select, outside-press, or Escape.
  *
- * Keyboard: opening the menu puts focus on it (FocusScope, which traps while
- * open and returns focus to the trigger on close). Up/Down move the highlight
- * and wrap, Home/End jump to the ends, Enter/Space/gamepad-South choose,
- * Escape closes. Disabled items are stepped over rather than highlighted.
+ * Keyboard: opening the menu puts focus on it and closing returns focus to the
+ * trigger, both via FocusScope. Up/Down move the highlight and wrap, Home/End
+ * jump to the ends, Enter/Space/gamepad-South choose, Escape closes. Disabled
+ * items are stepped over rather than highlighted. FocusScope's focus trap is
+ * not claimed: it does not currently fire for anyone (Singtaa/OneJS#123).
  *
  * Rows are discovered by registration rather than by counting children, because
  * `children` is arbitrary: MenuSeparators are not rows, and a caller is free to
@@ -137,6 +138,7 @@ export function DropdownMenu({
     count,
     isDisabled,
     onCommit: commit,
+    onClose: () => setOpen(false),
   })
 
   const ctx = useMemo<MenuContextValue>(
