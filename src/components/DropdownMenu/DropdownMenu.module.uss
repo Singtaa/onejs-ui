@@ -41,6 +41,16 @@
     opacity: 0.5;
 }
 
+/* Keyboard highlight. Same treatment as :hover, plus the ring token, so a row
+   reached by arrow key reads the way the rest of the library reads under
+   keyboard focus. The rows are not focus targets themselves (see
+   useMenuNavigation), so this cannot be a :focus rule. */
+.itemActive {
+    background-color: var(--ojs-overlay-hover);
+    border-left-width: var(--ojs-focus-width, 2px);
+    border-left-color: var(--ojs-ring);
+}
+
 .itemText {
     color: var(--ojs-fg);
     font-size: var(--ojs-font-size-md);

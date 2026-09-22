@@ -24,6 +24,7 @@
   "license": "MIT",
   "scripts": {
     "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types \"src/**/*.test.ts\"",
     "lint": "eslint ."
   },
   "peerDependencies": {

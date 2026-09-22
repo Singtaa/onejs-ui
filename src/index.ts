@@ -52,6 +52,15 @@ export type {
   AnchoredPosition,
 } from "./foundation/overlay"
 
+// Foundation: menu keyboard navigation
+export { useMenuNavigation, resolveMenuKey, resolveMenuNavigation } from "./foundation/menu"
+export type {
+  MenuNavigation,
+  MenuNavigationOptions,
+  MenuKeyAction,
+  MenuKeyState,
+} from "./foundation/menu"
+
 // Components
 export { Button } from "./components/Button"
 export type { ButtonProps, ButtonIntent, ButtonSize } from "./components/Button"
@@ -115,3 +124,4 @@ export type { TooltipProps } from "./components/Tooltip"
 
 // Utilities
 export { cx } from "./utils/cx"
+export { synthesizedClick } from "./utils/synthesizedClick"
