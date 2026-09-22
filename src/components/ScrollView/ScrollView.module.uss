@@ -3,7 +3,7 @@
    win by load order. */
 
 .scrollView .unity-scroller {
-    background-color: rgba(0, 0, 0, 0);
+    background-color: var(--ojs-scrollbar, var(--ojs-fg-subtle));
     border-radius: var(--ojs-scrollbar-radius, var(--ojs-radius-sm));
     /* Skin slot: groove sprite (9-sliced, the groove stretches along the bar). */
     background-image: var(--ojs-scrollbar-image, none);
@@ -14,29 +14,17 @@
     -unity-slice-scale: var(--ojs-scrollbar-slice-scale, 1px);
 }
 
-/* Size the bar, and only paint the groove while the thumb shows: with
-   scrollerVisibility Auto the Scroller is always laid out and the theme's opaque
-   10px groove would show even when there is nothing to scroll. */
+/* Size the bar. Nothing here hides the groove when there is nothing to scroll,
+   because ScrollView already does: under ScrollerVisibility.Auto its
+   needsVertical is `scrollableHeight > 0.001f`, and UpdateScrollers sets the
+   scroller's inline display to None when that is false, so an unneeded
+   scroller is not laid out and paints nothing at all. */
 .scrollView .unity-scroller--vertical {
     width: var(--ojs-scrollbar-width, 10px);
-    background-color: rgba(0, 0, 0, 0);
-    background-image: none;
 }
 
 .scrollView .unity-scroller--horizontal {
     height: var(--ojs-scrollbar-width, 10px);
-    background-color: rgba(0, 0, 0, 0);
-    background-image: none;
-}
-
-.scrollView:global(.unity-scroll-view--has-thumb) .unity-scroller--vertical {
-    background-color: var(--ojs-scrollbar, var(--ojs-fg-subtle));
-    background-image: var(--ojs-scrollbar-image, none);
-}
-
-.scrollView:global(.unity-scroll-view--has-thumb) .unity-scroller--horizontal {
-    background-color: var(--ojs-scrollbar, var(--ojs-fg-subtle));
-    background-image: var(--ojs-scrollbar-image, none);
 }
 
 .scrollView .unity-scroller__low-button,
