@@ -61,6 +61,20 @@
     background-color: var(--ojs-overlay-hover);
 }
 
+/* Keyboard highlight. Same treatment as :hover, plus the ring token, so an
+   option reached by arrow key reads the way the rest of the library reads under
+   keyboard focus. The options are not focus targets themselves (see
+   useMenuNavigation), so this cannot be a :focus rule. */
+.optionActive {
+    background-color: var(--ojs-overlay-hover);
+    border-left-width: var(--ojs-focus-width, 2px);
+    border-left-color: var(--ojs-ring);
+}
+
+.optionDisabled {
+    opacity: 0.5;
+}
+
 .optionText {
     color: var(--ojs-fg);
     font-size: var(--ojs-font-size-md);

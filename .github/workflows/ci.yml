@@ -51,7 +51,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 22 rather than 20 because `npm test` runs the suite straight from
+          # TypeScript with node's own type stripping, which landed in 22.6.
+          # The alternative was a transpile step and a test framework to carry
+          # it, for one file of pure arithmetic.
+          node-version: 22
           cache: npm
           cache-dependency-path: onejs-ui/package-lock.json
 

@@ -6,6 +6,7 @@ import {
   type NavigationEventData,
 } from "onejs-react"
 import { cx } from "../../utils/cx"
+import { synthesizedClick } from "../../utils/synthesizedClick"
 import styles from "./Button.module.uss"
 
 export type ButtonIntent = "primary" | "secondary" | "ghost" | "danger"
@@ -59,11 +60,7 @@ export function Button({
     requestAnimationFrame(() => {
       activatingRef.current = false
     })
-    // Keyboard and gamepad activation has no pointer, so every coordinate is zero,
-    // local ones included: localX and localY are measured from the element's own
-    // box, and there is no position to measure. pointerId -1 is what marks this as
-    // a synthesised activation, so a handler that cares reads that, not the zeros.
-    onClick?.({ type: "click", x: 0, y: 0, localX: 0, localY: 0, button: 0, pointerId: -1, modifiers: 0 })
+    onClick?.(synthesizedClick())
   }, [onClick, disabled])
 
   const handleNavigationSubmit = useCallback(
