@@ -24,6 +24,7 @@
   "license": "MIT",
   "scripts": {
     "typecheck": "tsc --noEmit",
+    "check:uss": "node scripts/check-uss-classes.mjs",
     "lint": "eslint ."
   },
   "peerDependencies": {
