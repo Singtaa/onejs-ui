@@ -44,11 +44,12 @@ export interface SelectProps {
  * options are stepped over rather than highlighted. The highlight is a class
  * rather than real focus; see useMenuNavigation for why.
  *
- * FocusScope's focus TRAP is not claimed here, because it does not currently
- * work for anyone: it listens for `onFocusOut`, which onejs-react maps to a
- * `focusout` event the bridge never emits (it emits `blur`). Measured in a
- * panel; filed as Singtaa/OneJS#123. Autofocus and focus restoration do work,
- * since neither depends on a focus event arriving.
+ * FocusScope's focus trap works from OneJS 3.4.8: it listens for `onFocusOut`,
+ * and that is the release where the bridge began sending `focusout`
+ * (Singtaa/OneJS#123). There, focus that lands outside the open menu is pulled
+ * back inside on the next frame. On earlier OneJS the trap never fires.
+ * Autofocus and focus restoration work on every version, since neither depends
+ * on a focus event arriving.
  */
 export function Select({
   value,

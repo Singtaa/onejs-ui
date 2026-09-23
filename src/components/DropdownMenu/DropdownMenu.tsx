@@ -62,8 +62,10 @@ export interface DropdownMenuProps {
  * Keyboard: opening the menu puts focus on it and closing returns focus to the
  * trigger, both via FocusScope. Up/Down move the highlight and wrap, Home/End
  * jump to the ends, Enter/Space/gamepad-South choose, Escape closes. Disabled
- * items are stepped over rather than highlighted. FocusScope's focus trap is
- * not claimed: it does not currently fire for anyone (Singtaa/OneJS#123).
+ * items are stepped over rather than highlighted. FocusScope's focus trap
+ * holds focus in the open menu from OneJS 3.4.8, the release where the bridge
+ * began sending the `focusout` it listens for (Singtaa/OneJS#123); on earlier
+ * OneJS it never fires.
  *
  * Rows are discovered by registration rather than by counting children, because
  * `children` is arbitrary: MenuSeparators are not rows, and a caller is free to
