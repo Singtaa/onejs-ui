@@ -18,7 +18,7 @@ import { ThemeProvider, Card, Heading, Button, darkTheme } from "onejs-ui"
 ## Requirements
 
 - **OneJS v3 runtime.** The focus ring's reliability depends on the runtime's tick-based `focuschange` signal. Use a OneJS build that includes it; with an older runtime the ring degrades gracefully to nav-event-driven only.
-- **OneJS 3.4.8 or newer for focus traps.** `FocusScope`'s trap (used by `Dialog`, `Drawer`, `Select` and `DropdownMenu`) listens for `focusout`, which the bridge sends from 3.4.8; menu arrow keys need 3.4.7 for `preventDefault` on navigation events.
+- **OneJS 3.4.8 or newer for focus traps.** `FocusScope`'s trap (used by `Dialog`, `Drawer`, `Select` and `DropdownMenu`) listens for `focusout`, which the bridge sends from 3.4.8. Menu arrow keys work on older runtimes too: the menu keeps focus on its container and never needs `preventDefault` on navigation events.
 - **Peer dependencies:** `react` (18 or 19) and `onejs-react`.
 - **Unity UI Toolkit coupling.** Because the form controls restyle *real* native UITK controls, the component sheets select UITK-internal element classes (`unity-toggle__checkmark`, `unity-base-slider__dragger`, `unity-text-field__input`, `unity-radio-button__checkmark-background`, …) and `applyTheme` overrides a few `--unity-colors-*` panel vars. These are stable but undocumented Unity internals, verified on Unity 6.x. A UITK control-template rename could require updating the matching selectors.
 
