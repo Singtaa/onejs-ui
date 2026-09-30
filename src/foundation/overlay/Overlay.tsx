@@ -1,4 +1,4 @@
-import { useRef, type ReactNode, type RefObject } from "react"
+import { useMemo, useRef, type ReactNode, type RefObject } from "react"
 import { View, Portal } from "onejs-react"
 import { cx } from "../../utils/cx"
 import { usePresence, motion } from "../motion"
@@ -51,10 +51,13 @@ export function Overlay({
   const { mounted, status } = usePresence(open, EXIT_MS)
   const pos = useAnchoredPosition(anchorRef, floatingRef, { placement, offset })
 
+  // The anchor is the trigger: its own click toggles, so its press is not outside.
+  const insideRefs = useMemo(() => [anchorRef], [anchorRef])
   useDismiss(floatingRef, onDismiss, {
     enabled: open,
     escape: dismissOnEscape,
     outsidePress: dismissOnOutsidePress && !scrim,
+    insideRefs,
   })
 
   if (!mounted) return null

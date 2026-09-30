@@ -47,12 +47,12 @@ export interface MenuNavigation {
  * arithmetic stays entirely ours.
  *
  * Escape must be handled through `onClose`. The Overlay foundation does
- * dismiss on Escape, but it does so with a listener on `__root`, and a key
- * event whose target is inside the portaled overlay does not reach it: the
- * menu's own focus is what routes the key, and the menu is portaled out of the
- * main tree. Measured in a panel, not reasoned about. Leaving `onClose` off
- * therefore leaves a focusable menu with no Escape at all, which is the
- * regression making the container focusable would otherwise have introduced.
+ * dismiss on Escape, but with a listener on `__root`, and onejs-react 0.2.1 and
+ * earlier never link the render container or the portal layer into the JS
+ * bubble chain, so a key whose target is inside the portaled menu does not
+ * reach it there (measured in a panel). Leaving `onClose` off would leave a
+ * focusable menu with no Escape on those versions. Where the key does reach
+ * `__root`, both paths close the menu, which is harmless.
  */
 export function useMenuNavigation({
     open,
