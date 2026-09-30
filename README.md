@@ -20,6 +20,7 @@ import { ThemeProvider, Card, Heading, Button, darkTheme } from "onejs-ui"
 - **OneJS v3 runtime.** The focus ring's reliability depends on the runtime's tick-based `focuschange` signal. Use a OneJS build that includes it; with an older runtime the ring degrades gracefully to nav-event-driven only.
 - **OneJS 3.4.8 or newer for focus traps.** `FocusScope`'s trap (used by `Dialog`, `Drawer`, `Select` and `DropdownMenu`) listens for `focusout`, which the bridge sends from 3.4.8. Menu arrow keys work on older runtimes too: the menu keeps focus on its container and never needs `preventDefault` on navigation events.
 - **Peer dependencies:** `react` (18 or 19) and `onejs-react`.
+- **onejs-react 0.2.2 or newer, with onejs-ui 0.0.5 or newer.** Overlays close on an outside press or Escape, and the focus ring tells pointer from keyboard, through listeners on `__root`, which hear bubbled events only from onejs-react 0.2.2. On an older onejs-react, an outside press does not close a Popover, menu or Select, Escape does not close a Popover, Dialog or Drawer, and the focus ring does not switch between pointer and keyboard; onejs-ui 0.0.4 or older on onejs-react 0.2.2 reopens an overlay when its trigger is pressed.
 - **Unity UI Toolkit coupling.** Because the form controls restyle *real* native UITK controls, the component sheets select UITK-internal element classes (`unity-toggle__checkmark`, `unity-base-slider__dragger`, `unity-text-field__input`, `unity-radio-button__checkmark-background`, …) and `applyTheme` overrides a few `--unity-colors-*` panel vars. These are stable but undocumented Unity internals, verified on Unity 6.x. A UITK control-template rename could require updating the matching selectors.
 
 ## Install
@@ -27,6 +28,8 @@ import { ThemeProvider, Card, Heading, Button, darkTheme } from "onejs-ui"
 ```bash
 npm install onejs-ui
 ```
+
+onejs-ui's styles are CSS Modules (`.module.uss`), so your esbuild needs onejs-unity's `ussModulesPlugin` (the OneJS scaffold's `esbuild.config.mjs` already has it). Build once before type-checking: the plugin writes the `.module.uss.d.ts` files TypeScript reads. Outside a OneJS project, TypeScript also needs the runtime globals the scaffold's `types/global.d.ts` declares (`__root`, `__eventAPI`, `console`, the timers and more): copy that file.
 
 ## Quickstart
 
@@ -73,7 +76,7 @@ render(
 | **Layout** | `Card`, `Stack` / `HStack` / `VStack`, `Divider`, `Spacer` |
 | **Typography** | `Text`, `Heading` |
 | **Form controls** | `Button`, `Checkbox`, `Switch`, `Input`, `Slider`, `RadioGroup`, `Select` |
-| **Feedback** | `Badge`, `Toast` (`ToastProvider` + `useToast`) |
+| **Feedback** | `Badge`, toasts (`ToastProvider` + `useToast`) |
 | **Overlays** | `Popover`, `Dialog`, `DropdownMenu` (+ `MenuItem`, `MenuSeparator`), `Drawer`, `Tooltip` |
 | **Foundations** | `ThemeProvider`/`useTheme`, `FocusScope`/`FocusManager`, `Overlay`/`Scrim`, `useAnchoredPosition`/`useDismiss`, `useMenuNavigation`, `usePresence`/`motion` |
 | **Utilities** | `cx` (class names), `synthesizedClick` (the click a keyboard or gamepad choice passes to `onClick`/`onChange`) |
