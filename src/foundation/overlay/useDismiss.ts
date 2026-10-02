@@ -3,6 +3,12 @@ import { isOutsidePress } from "./outsidePress"
 import { useLayer } from "./layers"
 
 declare const __root: any
+// The bootstrap's low-level event API. An app's own globals (onejs-unity/globals)
+// leave runtime internals out, so each file that reaches it declares it here.
+declare const __eventAPI: {
+  addEventListener(element: any, eventType: string, callback: (e: any) => void): void
+  removeEventListener(element: any, eventType: string, callback: (e: any) => void): void
+}
 
 export interface DismissOptions {
   enabled?: boolean

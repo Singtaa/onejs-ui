@@ -17,14 +17,6 @@ declare const __root: any
 declare function requestAnimationFrame(callback: (time: number) => void): number
 declare function cancelAnimationFrame(id: number): void
 
-// Low-level event API (QuickJSBootstrap) for global listeners not tied to a
-// rendered element (e.g. outside-press / Escape dismissal on __root).
-declare const __eventAPI: {
-  addEventListener: (element: any, eventType: string, callback: (e: any) => void) => void
-  removeEventListener: (element: any, eventType: string, callback: (e: any) => void) => void
-  removeAllEventListeners: (element: any) => void
-}
-
 // USS Modules: `import styles from "./Foo.module.uss"` -> scoped class-name map
 declare module "*.module.uss" {
   const classes: Record<string, string>
