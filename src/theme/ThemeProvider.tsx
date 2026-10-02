@@ -4,6 +4,7 @@ import {
   useContext,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react"
@@ -16,6 +17,8 @@ import { initFocusVisible, disposeFocusVisible } from "../foundation/focus/focus
 interface ThemeContextValue {
   /** The currently active token set (read for inline/dynamic values that can't use USS var()). */
   tokens: ThemeTokens
+  /** The registered name of the active theme, when it was chosen by name ("dark", "pixel"); undefined for a tokens object. */
+  name?: string
   /** Swap the active theme by tokens object or registered name. Instant: recompiles the variables sheet; only `useTheme()` consumers re-render, not the var()-styled tree. */
   setTheme: (theme: ThemeTokens | string) => void
 }
@@ -26,9 +29,10 @@ const ThemeContext = createContext<ThemeContextValue>({
 })
 
 export interface ThemeProviderProps {
-  /** Initial theme - a `ThemeTokens` object or a registered theme name. Defaults to
-   *  `darkTheme`. Read ONCE at mount; change the theme at runtime with `setTheme()` from
-   *  `useTheme()`, not by changing this prop (later prop changes are ignored). */
+  /** The theme: a `ThemeTokens` object or a registered theme name. Defaults to
+   *  `darkTheme`. Changing it switches the theme, as `setTheme()` from `useTheme()`
+   *  does; pass a stable object (a constant or a memoised value), since a new object
+   *  on every render re-applies the theme each time. */
   theme?: ThemeTokens | string
   children?: ReactNode
 }
@@ -42,7 +46,19 @@ export interface ThemeProviderProps {
  * `setTheme` swapper.
  */
 export function ThemeProvider({ theme = darkTheme, children }: ThemeProviderProps) {
-  const [tokens, setTokens] = useState<ThemeTokens>(() => resolveTheme(theme))
+  const [active, setActive] = useState(() => describe(theme))
+  const tokens = active.tokens
+
+  // Follow the prop after mount, so <ThemeProvider theme={dark ? "dark" : "light"}>
+  // switches. The first run is the mount itself, already in state.
+  const mounted = useRef(false)
+  useLayoutEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true
+      return
+    }
+    setActive(describe(theme))
+  }, [theme])
 
   useLayoutEffect(() => {
     applyTheme(tokens)
@@ -59,17 +75,21 @@ export function ThemeProvider({ theme = darkTheme, children }: ThemeProviderProp
     return () => disposeFocusVisible()
   }, [])
 
-  const setTheme = useCallback((next: ThemeTokens | string) => setTokens(resolveTheme(next)), [])
+  const setTheme = useCallback((next: ThemeTokens | string) => setActive(describe(next)), [])
 
-  // Memoized so consumers only re-render when `tokens` actually changes, not on every
+  // Memoized so consumers only re-render when the theme actually changes, not on every
   // unrelated re-render of ThemeProvider's parent.
-  const value = useMemo(() => ({ tokens, setTheme }), [tokens, setTheme])
+  const value = useMemo(() => ({ tokens, name: active.name, setTheme }), [tokens, active.name, setTheme])
 
   return (
     <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   )
+}
+
+function describe(theme: ThemeTokens | string): { tokens: ThemeTokens; name?: string } {
+  return { tokens: resolveTheme(theme), name: typeof theme === "string" ? theme : undefined }
 }
 
 export function useTheme(): ThemeContextValue {
