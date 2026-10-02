@@ -1,8 +1,11 @@
+import type { ElementRef } from "../../utils/elementRef"
 import { Slider as OjsSlider, type SliderProps as OjsSliderProps } from "onejs-react"
 import { cx } from "../../utils/cx"
 import styles from "./Slider.module.uss"
 
 export interface SliderProps extends Omit<OjsSliderProps, "onChange"> {
+  /** The underlying UI Toolkit element, for measuring or anchoring an overlay to it. */
+  ref?: ElementRef<"Slider">
   /** Called with the new value. */
   onChange?: (value: number) => void
 }

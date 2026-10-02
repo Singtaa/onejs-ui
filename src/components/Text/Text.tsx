@@ -1,3 +1,4 @@
+import type { ElementRef } from "../../utils/elementRef"
 import { Text as OjsText, type TextProps as OjsTextProps } from "onejs-react"
 import { cx } from "../../utils/cx"
 import styles from "./Text.module.uss"
@@ -6,6 +7,8 @@ export type TextSize = "sm" | "md" | "lg" | "xl"
 export type TextTone = "default" | "muted" | "subtle"
 
 export interface TextProps extends OjsTextProps {
+  /** The underlying UI Toolkit element, for measuring or anchoring an overlay to it. */
+  ref?: ElementRef<"Text">
   /** Type scale step. Defaults to `md`. */
   size?: TextSize
   /** Foreground tone. Defaults to `default`. */

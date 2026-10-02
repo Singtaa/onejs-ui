@@ -1,8 +1,11 @@
+import type { ElementRef } from "../../utils/elementRef"
 import { TextField, type TextFieldProps as OjsTextFieldProps } from "onejs-react"
 import { cx } from "../../utils/cx"
 import styles from "./Input.module.uss"
 
 export interface InputProps extends Omit<OjsTextFieldProps, "onChange"> {
+  /** The underlying UI Toolkit element, for measuring or anchoring an overlay to it. */
+  ref?: ElementRef<"TextField">
   /** Called with the new text value. */
   onChange?: (value: string) => void
 }

@@ -1,3 +1,4 @@
+import type { ElementRef } from "../../utils/elementRef"
 import { Children, type ReactNode } from "react"
 import { View, type ViewProps, type ViewStyle } from "onejs-react"
 
@@ -6,6 +7,8 @@ export type StackAlign = "start" | "center" | "end" | "stretch"
 export type StackJustify = "start" | "center" | "end" | "between" | "around"
 
 export interface StackProps extends ViewProps {
+  /** The underlying UI Toolkit element, for measuring or anchoring an overlay to it. */
+  ref?: ElementRef<"View">
   /** Main-axis direction. Default "column". */
   direction?: StackDirection
   /** Spacing between children, in px (applied as margin since UI Toolkit has no `gap`). Default 0. */

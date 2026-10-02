@@ -1,8 +1,11 @@
+import type { ElementRef } from "../../utils/elementRef"
 import { Toggle, type ToggleProps as OjsToggleProps } from "onejs-react"
 import { cx } from "../../utils/cx"
 import styles from "./Switch.module.uss"
 
 export interface SwitchProps extends Omit<OjsToggleProps, "text" | "onChange"> {
+  /** The underlying UI Toolkit element, for measuring or anchoring an overlay to it. */
+  ref?: ElementRef<"Toggle">
   /** Label rendered to the left of the switch. */
   label?: string
   /** Called with the new on/off state. */

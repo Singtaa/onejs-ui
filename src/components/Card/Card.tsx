@@ -1,3 +1,4 @@
+import type { ElementRef } from "../../utils/elementRef"
 import { View, type ViewProps } from "onejs-react"
 import { cx } from "../../utils/cx"
 import styles from "./Card.module.uss"
@@ -5,6 +6,8 @@ import styles from "./Card.module.uss"
 export type CardVariant = "surface" | "raised"
 
 export interface CardProps extends ViewProps {
+  /** The underlying UI Toolkit element, for measuring or anchoring an overlay to it. */
+  ref?: ElementRef<"View">
   /** Surface elevation. Defaults to `surface`. */
   variant?: CardVariant
 }

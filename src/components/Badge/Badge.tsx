@@ -1,3 +1,4 @@
+import type { ElementRef } from "../../utils/elementRef"
 import { View, Text, type ViewProps } from "onejs-react"
 import { cx } from "../../utils/cx"
 import styles from "./Badge.module.uss"
@@ -5,6 +6,8 @@ import styles from "./Badge.module.uss"
 export type BadgeIntent = "neutral" | "primary" | "success" | "warning" | "danger"
 
 export interface BadgeProps extends ViewProps {
+  /** The underlying UI Toolkit element, for measuring or anchoring an overlay to it. */
+  ref?: ElementRef<"View">
   /** Color intent. Default "neutral". */
   intent?: BadgeIntent
 }

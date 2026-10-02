@@ -1,3 +1,4 @@
+import type { ElementRef } from "../../utils/elementRef"
 import { useCallback, useRef } from "react"
 import {
   Button as OjsButton,
@@ -13,6 +14,8 @@ export type ButtonIntent = "primary" | "secondary" | "ghost" | "danger"
 export type ButtonSize = "sm" | "md" | "lg"
 
 export interface ButtonProps extends OjsButtonProps {
+  /** The underlying UI Toolkit element, for measuring or anchoring an overlay to it. */
+  ref?: ElementRef<"Button">
   /** Visual intent. Defaults to `primary`. */
   intent?: ButtonIntent
   /** Size step. Defaults to `md`. */
