@@ -17,5 +17,13 @@ import type { PointerEventData } from "onejs-react"
  * path so a consumer's option handler cannot tell which control synthesised it.
  */
 export function synthesizedClick(): PointerEventData {
-    return { type: "click", x: 0, y: 0, localX: 0, localY: 0, button: 0, pointerId: -1, modifiers: 0 }
+    return {
+        type: "click", x: 0, y: 0, localX: 0, localY: 0, button: 0, pointerId: -1,
+        // No element dispatched it, so there is no handle to name; the methods
+        // behave as on a real event, so a handler written for a press works.
+        target: 0, currentTarget: 0,
+        defaultPrevented: false, propagationStopped: false,
+        preventDefault() { this.defaultPrevented = true },
+        stopPropagation() { this.propagationStopped = true },
+    }
 }
