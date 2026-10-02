@@ -1,8 +1,9 @@
-import { useRef, useState, type ReactNode } from "react"
+import { useRef, type ReactNode } from "react"
 import { View } from "onejs-react"
 import { cx } from "../../utils/cx"
 import { Overlay, type OverlayPlacement } from "../../foundation/overlay"
 import { useTriggerActivation } from "../../foundation/overlay/useTriggerActivation"
+import { useOpenState } from "../../foundation/state"
 import styles from "./Popover.module.uss"
 
 export interface PopoverProps {
@@ -11,11 +12,12 @@ export interface PopoverProps {
   children?: ReactNode
   /** Preferred placement relative to the trigger. Default "bottom". */
   placement?: OverlayPlacement
-  /** Controlled open state. Omit for uncontrolled. */
+  /** Controlled open state. Omit it and the popover owns its open state. */
   open?: boolean
-  onOpenChange?: (open: boolean) => void
-  /** Initial open state when uncontrolled. */
+  /** Initial open state when uncontrolled. Default false. */
   defaultOpen?: boolean
+  /** Called with the requested open state: the trigger toggles, a dismissal closes. */
+  onOpenChange?: (open: boolean) => void
   /** Class applied to the floating panel. */
   className?: string
 }
@@ -31,16 +33,11 @@ export function Popover({
   placement = "bottom",
   open,
   onOpenChange,
-  defaultOpen = false,
+  defaultOpen,
   className,
 }: PopoverProps) {
   const anchorRef = useRef<any>(null)
-  const [uncontrolled, setUncontrolled] = useState(defaultOpen)
-  const isOpen = open ?? uncontrolled
-  const setOpen = (v: boolean) => {
-    onOpenChange?.(v)
-    if (open === undefined) setUncontrolled(v)
-  }
+  const { open: isOpen, setOpen } = useOpenState({ open, defaultOpen, onOpenChange })
 
   const triggerProps = useTriggerActivation(() => setOpen(!isOpen))
 
@@ -53,7 +50,7 @@ export function Popover({
         anchorRef={anchorRef}
         open={isOpen}
         placement={placement}
-        onDismiss={() => setOpen(false)}
+        onOpenChange={setOpen}
       >
         <View className={cx(styles.panel, className)}>{children}</View>
       </Overlay>

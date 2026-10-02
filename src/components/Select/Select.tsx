@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useRef } from "react"
 import { View, Text, type PointerEventData } from "onejs-react"
 import { cx } from "../../utils/cx"
 import { synthesizedClick } from "../../utils/synthesizedClick"
@@ -6,6 +6,7 @@ import { Button } from "../Button"
 import { Overlay } from "../../foundation/overlay"
 import { FocusScope, RING_CLASS } from "../../foundation/focus"
 import { useMenuNavigation } from "../../foundation/menu"
+import { useOpenState } from "../../foundation/state"
 import styles from "./Select.module.uss"
 
 export interface SelectOption {
@@ -29,8 +30,12 @@ export interface SelectProps {
   /** Text shown when nothing is selected. */
   placeholder?: string
   disabled?: boolean
-  /** Initial open state (uncontrolled). */
+  /** Controlled open state of the menu. Omit it and the Select owns its open state. */
+  open?: boolean
+  /** Initial open state of the menu when uncontrolled. Default false. */
   defaultOpen?: boolean
+  /** Called with the requested open state: the trigger toggles; choosing or a dismissal closes. */
+  onOpenChange?: (open: boolean) => void
 }
 
 /**
@@ -57,10 +62,12 @@ export function Select({
   onChange,
   placeholder = "Select…",
   disabled,
-  defaultOpen = false,
+  open: openProp,
+  defaultOpen,
+  onOpenChange,
 }: SelectProps) {
   const anchorRef = useRef<any>(null)
-  const [open, setOpen] = useState(defaultOpen)
+  const { open, setOpen } = useOpenState({ open: openProp, defaultOpen, onOpenChange })
   const selected = options.find((o) => o.value === value)
 
   // One path for both pointer and keyboard, so a consumer's handler cannot tell
@@ -72,7 +79,7 @@ export function Select({
       onChange?.(opt.value, event)
       setOpen(false)
     },
-    [options, onChange]
+    [options, onChange, setOpen]
   )
 
   // Open onto the selected option so Up/Down continue from what is showing,
@@ -90,7 +97,7 @@ export function Select({
 
   return (
     <View ref={anchorRef}>
-      <Button intent="secondary" disabled={disabled} onClick={() => setOpen((o) => !o)}>
+      <Button intent="secondary" disabled={disabled} onClick={() => setOpen(!open)}>
         <View className={styles.trigger}>
           <Text className={styles.triggerLabel}>{selected?.label ?? placeholder}</Text>
           <Text className={styles.caret}>⌄</Text>
@@ -102,7 +109,7 @@ export function Select({
         open={open}
         placement="bottom-start"
         offset={4}
-        onDismiss={() => setOpen(false)}
+        onOpenChange={setOpen}
       >
         <FocusScope>
           <View className={cx(styles.menu, RING_CLASS)} {...menuProps}>

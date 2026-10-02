@@ -32,6 +32,7 @@
     padding-right: var(--ojs-space-4);
 }
 
+.toastPrimary { border-left-color: var(--ojs-primary); }
 .toastSuccess { border-left-color: var(--ojs-success); }
 .toastWarning { border-left-color: var(--ojs-warning); }
 .toastDanger { border-left-color: var(--ojs-danger); }

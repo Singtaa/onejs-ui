@@ -5,13 +5,21 @@ import { usePresence, motion } from "../motion"
 import { useAnchoredPosition, type OverlayPlacement } from "./useAnchoredPosition"
 import { useDismiss } from "./useDismiss"
 import { Scrim } from "./Scrim"
+import { useOpenState } from "../state"
 
 export interface OverlayProps {
   /** Ref to the element the overlay is positioned against. */
   anchorRef: RefObject<any>
-  /** Whether the overlay is shown. */
-  open: boolean
-  /** Called when the overlay requests to close (scrim/outside press, Escape). */
+  /** Whether the overlay is shown (controlled). Omit it and the overlay owns its open state. */
+  open?: boolean
+  /** Initial open state when uncontrolled. Default false. */
+  defaultOpen?: boolean
+  /**
+   * Called with `false` when the overlay asks to close (scrim or outside
+   * press, Escape). A controlled overlay with no listener is not dismissible.
+   */
+  onOpenChange?: (open: boolean) => void
+  /** @deprecated Use `onOpenChange`, which is called with `false` whenever this is. */
   onDismiss?: () => void
   /** Preferred placement relative to the anchor. Default "bottom". */
   placement?: OverlayPlacement
@@ -38,7 +46,9 @@ const EXIT_MS = 200
  */
 export function Overlay({
   anchorRef,
-  open,
+  open: openProp,
+  defaultOpen,
+  onOpenChange,
   onDismiss,
   placement,
   offset,
@@ -48,12 +58,13 @@ export function Overlay({
   children,
 }: OverlayProps) {
   const floatingRef = useRef<any>(null)
+  const { open, close } = useOpenState({ open: openProp, defaultOpen, onOpenChange, onClose: onDismiss })
   const { mounted, status } = usePresence(open, EXIT_MS)
   const pos = useAnchoredPosition(anchorRef, floatingRef, { placement, offset, enabled: mounted })
 
   // The anchor is the trigger: its own click toggles, so its press is not outside.
   const insideRefs = useMemo(() => [anchorRef], [anchorRef])
-  useDismiss(floatingRef, onDismiss, {
+  useDismiss(floatingRef, close, {
     enabled: open,
     escape: dismissOnEscape,
     outsidePress: dismissOnOutsidePress && !scrim,
@@ -71,7 +82,7 @@ export function Overlay({
       {scrim ? (
         <Scrim
           className={cx(motion.fade, open_ ? motion.fadeOpen : motion.fadeClosed)}
-          onClick={onDismiss}
+          onClick={close}
         />
       ) : null}
       <View

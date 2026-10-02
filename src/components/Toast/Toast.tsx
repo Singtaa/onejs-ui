@@ -4,9 +4,10 @@ import {
 import { View, Text, Portal } from "onejs-react"
 import { cx } from "../../utils/cx"
 import { motion } from "../../foundation/motion"
+import { toastIntent, type StatusIntent, type ToastTone } from "../../utils/intent"
 import styles from "./Toast.module.uss"
 
-export type ToastTone = "default" | "success" | "warning" | "danger" | "info"
+export type { ToastTone }
 
 export type ToastPlacement =
   | "top-left" | "top-right" | "top-center"
@@ -15,6 +16,9 @@ export type ToastPlacement =
 export interface ToastOptions {
   title?: string
   message: string
+  /** Status color of the accent edge, shared with Badge. Default "neutral". */
+  intent?: StatusIntent
+  /** @deprecated Use `intent`; `tone: "default"` is `intent: "neutral"`. */
   tone?: ToastTone
   /** Auto-dismiss after this many ms. 0 keeps it until dismissed. Default 4000. */
   duration?: number
@@ -38,8 +42,9 @@ const PLACEMENT: Record<ToastPlacement, string> = {
   "bottom-center": styles.bottomCenter,
 }
 
-const TONE: Record<ToastTone, string | undefined> = {
-  default: undefined,
+const INTENT: Record<StatusIntent, string | undefined> = {
+  neutral: undefined,
+  primary: styles.toastPrimary,
   success: styles.toastSuccess,
   warning: styles.toastWarning,
   danger: styles.toastDanger,
@@ -116,7 +121,7 @@ function ToastView({ item, onRemove }: { item: ToastItem; onRemove: (id: number)
 
   return (
     <View
-      className={cx(styles.toast, TONE[item.tone ?? "default"], motion.fade, shown ? motion.fadeOpen : motion.fadeClosed)}
+      className={cx(styles.toast, INTENT[toastIntent(item.intent, item.tone)], motion.fade, shown ? motion.fadeOpen : motion.fadeClosed)}
       onClick={close}
     >
       {item.title ? <Text className={styles.title}>{item.title}</Text> : null}

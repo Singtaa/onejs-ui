@@ -47,3 +47,10 @@
 .danger .unity-text-element {
     color: var(--ojs-on-danger);
 }
+
+.info {
+    background-color: var(--ojs-info);
+}
+.info .unity-text-element {
+    color: #ffffff;
+}

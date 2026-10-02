@@ -4,6 +4,7 @@ import { cx } from "../../utils/cx"
 import { Scrim, useDismiss } from "../../foundation/overlay"
 import { FocusScope } from "../../foundation/focus"
 import { usePresence, motion } from "../../foundation/motion"
+import { useOpenState } from "../../foundation/state"
 import styles from "./Drawer.module.uss"
 
 export type DrawerSide = "left" | "right" | "top" | "bottom"
@@ -28,7 +29,13 @@ const PANEL_CLOSED: Record<DrawerSide, string> = {
 }
 
 export interface DrawerProps {
-  open: boolean
+  /** Controlled open state. Omit it and the drawer owns its open state. */
+  open?: boolean
+  /** Initial open state when uncontrolled. Default false. */
+  defaultOpen?: boolean
+  /** Called with `false` when the drawer asks to close (Escape or a backdrop press). */
+  onOpenChange?: (open: boolean) => void
+  /** @deprecated Use `onOpenChange`, which is called with `false` whenever this is. */
   onClose?: () => void
   /** Edge the drawer slides in from. Default "right". */
   side?: DrawerSide
@@ -49,7 +56,9 @@ const EXIT_MS = 280
  * and dismisses on Escape / backdrop press.
  */
 export function Drawer({
-  open,
+  open: openProp,
+  defaultOpen,
+  onOpenChange,
   onClose,
   side = "right",
   title,
@@ -59,11 +68,12 @@ export function Drawer({
   className,
 }: DrawerProps) {
   const panelRef = useRef<any>(null)
+  const { open, close } = useOpenState({ open: openProp, defaultOpen, onOpenChange, onClose })
   const { mounted, status } = usePresence(open, EXIT_MS)
 
   // Escape via the global key path; outside-press is handled by the scrim's own
   // click (a real element event: reliable across the portal boundary).
-  useDismiss(panelRef, onClose, {
+  useDismiss(panelRef, close, {
     enabled: open,
     escape: dismissOnEscape,
     outsidePress: false,
@@ -76,7 +86,7 @@ export function Drawer({
     <Portal>
       <Scrim
         className={cx(motion.fade, open_ ? motion.fadeOpen : motion.fadeClosed)}
-        onClick={dismissOnScrimClick ? onClose : undefined}
+        onClick={dismissOnScrimClick ? close : undefined}
       />
       <View
         ref={panelRef}

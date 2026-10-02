@@ -85,6 +85,7 @@ export type { SpacerProps } from "./components/Spacer"
 
 export { Badge } from "./components/Badge"
 export type { BadgeProps, BadgeIntent } from "./components/Badge"
+export type { StatusIntent, MenuItemIntent } from "./utils/intent"
 
 export { Checkbox } from "./components/Checkbox"
 export type { CheckboxProps } from "./components/Checkbox"
@@ -99,7 +100,7 @@ export { Slider } from "./components/Slider"
 export type { SliderProps } from "./components/Slider"
 
 export { RadioGroup } from "./components/RadioGroup"
-export type { RadioGroupProps } from "./components/RadioGroup"
+export type { RadioGroupProps, RadioGroupOptionsProps, RadioGroupChoicesProps, RadioOption } from "./components/RadioGroup"
 
 export { Select } from "./components/Select"
 export type { SelectProps, SelectOption } from "./components/Select"

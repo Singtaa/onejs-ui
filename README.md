@@ -81,13 +81,51 @@ render(
 | **Foundations** | `ThemeProvider`/`useTheme`, `FocusScope`/`FocusManager`, `Overlay`/`Scrim`, `useAnchoredPosition`/`useDismiss`, `useMenuNavigation`, `usePresence`/`motion` |
 | **Utilities** | `cx` (class names), `synthesizedClick` (the click a keyboard or gamepad choice passes to `onClick`/`onChange`) |
 
-Controlled inputs take `value` + `onChange(value)` (a plain value, not an event; `Select` also passes the choosing click as a second argument):
+Controlled inputs take `value` + `onChange(value)` (a plain value, not an event; `Select` also passes the choosing click as a second argument). `Select` and `RadioGroup` share one option shape, `{ value, label, disabled? }`, so switching between a menu and a row of radios changes the component name and nothing else:
 
 ```tsx
+const SIZES = [
+    { value: "s", label: "Small" },
+    { value: "m", label: "Medium" },
+    { value: "l", label: "Large", disabled: true },
+]
+
 <Switch label="Notifications" value={on} onChange={setOn} />
 <Slider value={vol} lowValue={0} highValue={100} onChange={setVol} />
-<Select value={fruit} options={FRUITS} onChange={setFruit} />
+<Select value={size} options={SIZES} onChange={setSize} />
+<RadioGroup value={size} options={SIZES} onChange={setSize} />
 ```
+
+Leave `value` out and `RadioGroup` owns its selection, starting from `defaultValue`. (Its older `choices` with a numeric index still works and is deprecated.)
+
+### Open state
+
+Every overlay (`Dialog`, `Drawer`, `Popover`, `DropdownMenu`, `Select`, `Tooltip`, and the `Overlay` foundation) takes the same three props. Pass `open` and the caller owns it; leave it out and the component owns it, starting from `defaultOpen`. `onOpenChange(open)` hears every change either way: the trigger toggling it, and Escape, an outside press or a choice closing it.
+
+```tsx
+const [open, setOpen] = useState(false)
+
+<Button onClick={() => setOpen(true)}>Delete…</Button>
+<Dialog open={open} onOpenChange={setOpen} title="Delete save?">
+    <Button intent="danger" onClick={() => setOpen(false)}>Delete</Button>
+</Dialog>
+
+<Popover trigger={<Button>Filters</Button>} onOpenChange={(open) => console.log(open)}>…</Popover>
+```
+
+A controlled overlay with no `onOpenChange` cannot be dismissed, which is how to make a modal the player must answer. (`Dialog` and `Drawer` still accept `onClose`, and `Overlay` `onDismiss`; both are deprecated, and each fires alongside `onOpenChange(false)`.)
+
+### Status intent
+
+`Badge` and toasts share one `intent` vocabulary, `StatusIntent`: `"neutral"` (the default), `"primary"`, `"success"`, `"warning"`, `"danger"` and `"info"`, each in the theme color of the same name. A destructive `MenuItem` takes `intent="danger"`, like a destructive `Button`.
+
+```tsx
+<Badge intent="success">Online</Badge>
+toast({ title: "Saved", message: "Slot 2", intent: "success" })
+<MenuItem intent="danger" onSelect={deleteSave}>Delete</MenuItem>
+```
+
+(Toast's `tone` and MenuItem's boolean `danger` still work and are deprecated. `Text` keeps its own `tone`, which means emphasis rather than status.)
 
 ## Theming
 

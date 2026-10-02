@@ -1,4 +1,5 @@
 import { getFocusedElement, isSameElement } from "./focusUtils"
+import { findRadioButtons } from "../../utils/radios"
 
 declare const __root: any
 
@@ -62,24 +63,6 @@ function clearRing() {
   }
 }
 
-// Collect a composite control's `.unity-radio-button` descendants (visual hierarchy).
-function collectRadios(el: any, out: any[], depth: number) {
-  if (!el || depth > 4 || out.length > 64) return
-  try {
-    const h = el.hierarchy
-    const n = h?.childCount ?? 0
-    for (let i = 0; i < n; i++) {
-      let c: any = null
-      try { c = h.ElementAt(i) } catch {}
-      if (!c) continue
-      let isRadio = false
-      try { isRadio = !!c.ClassListContains?.("unity-radio-button") } catch {}
-      if (isRadio) out.push(c)
-      else collectRadios(c, out, depth + 1)
-    }
-  } catch {}
-}
-
 // A RadioButtonGroup delegates focus to its radios but, on keyboard ENTRY, settles the
 // focus *leaf* on the group itself (Unity's historical "extra step"), so no radio gets
 // native `:focus` and the landing radio shows no ring. Promote the target radio to a
@@ -92,13 +75,16 @@ function promoteRadioGroupEntry(el: any) {
   let isGroup = false
   try { isGroup = !!el?.ClassListContains?.("unity-radio-button-group") } catch {}
   if (!isGroup) return
-  const radios: any[] = []
-  collectRadios(el, radios, 0)
+  const radios = findRadioButtons(el)
   if (radios.length === 0) return
-  let idx = 0 // prefer the checked radio (mirrors Unity), else the first
+  // Prefer the checked radio (mirrors Unity), else the first one that can take
+  // focus: a RadioGroup option can be disabled.
+  const enabled = (r: any) => { try { return r.enabledInHierarchy !== false } catch { return true } }
+  let idx = radios.findIndex(enabled)
+  if (idx < 0) return
   try {
     const v = el.value
-    if (typeof v === "number" && v >= 0 && v < radios.length) idx = v
+    if (typeof v === "number" && v >= 0 && v < radios.length && enabled(radios[v])) idx = v
   } catch {}
   try { radios[idx]?.Focus?.() } catch {}
 }

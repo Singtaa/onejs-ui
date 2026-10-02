@@ -15,6 +15,8 @@ import { Overlay, type OverlayPlacement } from "../../foundation/overlay"
 import { useTriggerActivation } from "../../foundation/overlay/useTriggerActivation"
 import { FocusScope, RING_CLASS } from "../../foundation/focus"
 import { useMenuNavigation } from "../../foundation/menu"
+import { useOpenState } from "../../foundation/state"
+import { menuItemIntent, type MenuItemIntent } from "../../utils/intent"
 import styles from "./DropdownMenu.module.uss"
 
 /** What a MenuItem registers about itself so the menu can drive it by index. */
@@ -49,10 +51,12 @@ export interface DropdownMenuProps {
   children?: ReactNode
   /** Preferred placement relative to the trigger. Default "bottom-start". */
   placement?: OverlayPlacement
-  /** Controlled open state. Omit for uncontrolled. */
+  /** Controlled open state. Omit it and the menu owns its open state. */
   open?: boolean
-  onOpenChange?: (open: boolean) => void
+  /** Initial open state when uncontrolled. Default false. */
   defaultOpen?: boolean
+  /** Called with the requested open state: the trigger toggles; choosing an item or a dismissal closes. */
+  onOpenChange?: (open: boolean) => void
   className?: string
 }
 
@@ -87,19 +91,11 @@ export function DropdownMenu({
   placement = "bottom-start",
   open,
   onOpenChange,
-  defaultOpen = false,
+  defaultOpen,
   className,
 }: DropdownMenuProps) {
   const anchorRef = useRef<any>(null)
-  const [uncontrolled, setUncontrolled] = useState(defaultOpen)
-  const isOpen = open ?? uncontrolled
-  const setOpen = useCallback(
-    (v: boolean) => {
-      onOpenChange?.(v)
-      if (open === undefined) setUncontrolled(v)
-    },
-    [onOpenChange, open]
-  )
+  const { open: isOpen, setOpen } = useOpenState({ open, defaultOpen, onOpenChange })
 
   // Registration order is the source of row order. Held in a ref because rows
   // register during layout effects, and re-rendering the menu on each one would
@@ -168,7 +164,7 @@ export function DropdownMenu({
         anchorRef={anchorRef}
         open={isOpen}
         placement={placement}
-        onDismiss={() => setOpen(false)}
+        onOpenChange={setOpen}
       >
         <FocusScope>
           <View className={cx(styles.menu, RING_CLASS, className)} {...menuProps}>
@@ -189,13 +185,16 @@ export interface MenuItemProps {
    */
   onSelect?: (event: PointerEventData) => void
   disabled?: boolean
-  /** Render as a destructive action (danger-colored text). */
+  /** `"danger"` marks a destructive action with danger-colored text. Default `"neutral"`. */
+  intent?: MenuItemIntent
+  /** @deprecated Use `intent="danger"`. */
   danger?: boolean
 }
 
 /** A selectable row inside a DropdownMenu. Closes the menu on select. */
-export function MenuItem({ children, onSelect, disabled, danger }: MenuItemProps) {
+export function MenuItem({ children, onSelect, disabled, intent, danger }: MenuItemProps) {
   const ctx = useContext(MenuContext)
+  const resolvedIntent = menuItemIntent(intent, danger)
 
   // Stable for the life of the row, so re-renders update the registration in
   // place instead of reordering the menu.
@@ -232,7 +231,7 @@ export function MenuItem({ children, onSelect, disabled, danger }: MenuItemProps
     <View
       className={cx(
         styles.item,
-        danger && styles.itemDanger,
+        resolvedIntent === "danger" && styles.itemDanger,
         disabled && styles.itemDisabled,
         active && styles.itemActive
       )}

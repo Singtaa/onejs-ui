@@ -4,10 +4,17 @@ import { cx } from "../../utils/cx"
 import { Scrim, useDismiss } from "../../foundation/overlay"
 import { FocusScope } from "../../foundation/focus"
 import { usePresence, motion } from "../../foundation/motion"
+import { useOpenState } from "../../foundation/state"
 import styles from "./Dialog.module.uss"
 
 export interface DialogProps {
-  open: boolean
+  /** Controlled open state. Omit it and the dialog owns its open state. */
+  open?: boolean
+  /** Initial open state when uncontrolled. Default false. */
+  defaultOpen?: boolean
+  /** Called with `false` when the dialog asks to close (Escape or a backdrop press). */
+  onOpenChange?: (open: boolean) => void
+  /** @deprecated Use `onOpenChange`, which is called with `false` whenever this is. */
   onClose?: () => void
   /** Optional heading rendered at the top of the panel. */
   title?: string
@@ -30,7 +37,9 @@ const EXIT_MS = 200
  * never close it.
  */
 export function Dialog({
-  open,
+  open: openProp,
+  defaultOpen,
+  onOpenChange,
   onClose,
   title,
   children,
@@ -39,11 +48,12 @@ export function Dialog({
   className,
 }: DialogProps) {
   const panelRef = useRef<any>(null)
+  const { open, close } = useOpenState({ open: openProp, defaultOpen, onOpenChange, onClose })
   const { mounted, status } = usePresence(open, EXIT_MS)
 
   // Escape via the global key path; backdrop dismissal is the scrim's own click.
   // The panel stops click propagation so inside-clicks don't reach the scrim.
-  useDismiss(panelRef, onClose, {
+  useDismiss(panelRef, close, {
     enabled: open,
     escape: dismissOnEscape,
     outsidePress: false,
@@ -56,7 +66,7 @@ export function Dialog({
     <Portal>
       <Scrim
         className={cx(styles.scrimCenter, motion.fade, open_ ? motion.fadeOpen : motion.fadeClosed)}
-        onClick={dismissOnScrimClick ? onClose : undefined}
+        onClick={dismissOnScrimClick ? close : undefined}
       >
         <View
           ref={panelRef}
