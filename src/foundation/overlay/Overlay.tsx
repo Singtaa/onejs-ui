@@ -49,7 +49,7 @@ export function Overlay({
 }: OverlayProps) {
   const floatingRef = useRef<any>(null)
   const { mounted, status } = usePresence(open, EXIT_MS)
-  const pos = useAnchoredPosition(anchorRef, floatingRef, { placement, offset })
+  const pos = useAnchoredPosition(anchorRef, floatingRef, { placement, offset, enabled: mounted })
 
   // The anchor is the trigger: its own click toggles, so its press is not outside.
   const insideRefs = useMemo(() => [anchorRef], [anchorRef])

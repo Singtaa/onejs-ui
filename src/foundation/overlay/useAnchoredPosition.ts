@@ -13,6 +13,11 @@ export interface AnchoredPositionOptions {
   padding?: number
   /** Flip to the opposite side when the preferred side would overflow. Default true. */
   flip?: boolean
+  /**
+   * Track the anchor only while true. Each tracked frame reads the anchor's
+   * bounds from C#, so an overlay that is closed should pass false. Default true.
+   */
+  enabled?: boolean
 }
 
 export interface AnchoredPosition {
@@ -129,6 +134,7 @@ export function useAnchoredPosition(
     offset: options.offset ?? 6,
     padding: options.padding ?? 8,
     flip: options.flip ?? true,
+    enabled: options.enabled ?? true,
   }
 
   const [pos, setPos] = useState<AnchoredPosition>({ x: 0, y: 0, placement: opts.placement, ready: false })
@@ -136,6 +142,12 @@ export function useAnchoredPosition(
   posRef.current = pos
 
   useLayoutEffect(() => {
+    if (!opts.enabled) {
+      // Measure afresh next time, so a reopened overlay never shows at the
+      // position it had when it closed.
+      if (posRef.current.ready) setPos({ ...posRef.current, ready: false })
+      return
+    }
     let raf = 0
     const tick = () => {
       const next = compute(anchorRef.current, floatingRef.current, opts)
@@ -150,7 +162,7 @@ export function useAnchoredPosition(
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [opts.placement, opts.offset, opts.padding, opts.flip])
+  }, [opts.enabled, opts.placement, opts.offset, opts.padding, opts.flip])
 
   return pos
 }
