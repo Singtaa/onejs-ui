@@ -1,5 +1,6 @@
 import { useEffect, type RefObject } from "react"
 import { isOutsidePress } from "./outsidePress"
+import { useLayer } from "./layers"
 
 declare const __root: any
 
@@ -24,6 +25,10 @@ export interface DismissOptions {
  *
  * The listeners are attached in an effect, after the press that opened the
  * overlay has finished, so opening never immediately self-dismisses.
+ *
+ * Only the overlay opened last acts: every open overlay hears the same Escape
+ * and the same press on __root, and a Select open inside a Dialog should close
+ * alone.
  */
 const NO_REFS: ReadonlyArray<RefObject<any>> = []
 
@@ -32,14 +37,17 @@ export function useDismiss(
   onDismiss: (() => void) | undefined,
   { enabled = true, escape = true, outsidePress = true, insideRefs = NO_REFS }: DismissOptions = {}
 ): void {
+  const isTop = useLayer(enabled && !!onDismiss && (escape || outsidePress))
+
   useEffect(() => {
     if (!enabled || !onDismiss) return
     if (typeof __root === "undefined" || typeof __eventAPI === "undefined") return
 
     const onKeyDown = (e: any) => {
-      if (escape && e?.key === "Escape") onDismiss()
+      if (escape && e?.key === "Escape" && isTop()) onDismiss()
     }
     const onPointerDown = (e: any) => {
+      if (!isTop()) return
       const rects = [floatingRef, ...insideRefs].map((ref) => ref.current?.worldBound)
       if (isOutsidePress(e?.x ?? 0, e?.y ?? 0, rects)) onDismiss()
     }
