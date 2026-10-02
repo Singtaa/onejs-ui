@@ -2,6 +2,7 @@ import { useRef, useState, type ReactNode } from "react"
 import { View } from "onejs-react"
 import { cx } from "../../utils/cx"
 import { Overlay, type OverlayPlacement } from "../../foundation/overlay"
+import { useTriggerActivation } from "../../foundation/overlay/useTriggerActivation"
 import styles from "./Popover.module.uss"
 
 export interface PopoverProps {
@@ -41,9 +42,11 @@ export function Popover({
     if (open === undefined) setUncontrolled(v)
   }
 
+  const triggerProps = useTriggerActivation(() => setOpen(!isOpen))
+
   return (
     <>
-      <View ref={anchorRef} style={{ alignSelf: "flex-start" }} onClick={() => setOpen(!isOpen)}>
+      <View ref={anchorRef} style={{ alignSelf: "flex-start" }} {...triggerProps}>
         {trigger}
       </View>
       <Overlay

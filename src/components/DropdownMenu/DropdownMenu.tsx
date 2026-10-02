@@ -12,6 +12,7 @@ import { View, Text, type PointerEventData } from "onejs-react"
 import { cx } from "../../utils/cx"
 import { synthesizedClick } from "../../utils/synthesizedClick"
 import { Overlay, type OverlayPlacement } from "../../foundation/overlay"
+import { useTriggerActivation } from "../../foundation/overlay/useTriggerActivation"
 import { FocusScope, RING_CLASS } from "../../foundation/focus"
 import { useMenuNavigation } from "../../foundation/menu"
 import styles from "./DropdownMenu.module.uss"
@@ -156,9 +157,11 @@ export function DropdownMenu({
     [setOpen, register, update, activeIndex, setActiveIndex, indexOf]
   )
 
+  const triggerProps = useTriggerActivation(() => setOpen(!isOpen))
+
   return (
     <>
-      <View ref={anchorRef} style={{ alignSelf: "flex-start" }} onClick={() => setOpen(!isOpen)}>
+      <View ref={anchorRef} style={{ alignSelf: "flex-start" }} {...triggerProps}>
         {trigger}
       </View>
       <Overlay
